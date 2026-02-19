@@ -1,6 +1,92 @@
-<h1 class="text-3xl font-bold mb-4">Contact</h1>
+<div class="min-h-screen bg-gray-950 py-16 px-6 text-white">
+  <div class="max-w-2xl mx-auto bg-gray-900 shadow-2xl rounded-2xl p-12 border border-gray-800">
 
-<p class="text-slate-300 leading-relaxed">
-  This is the Contact page. Add your content here.
-</p>
+    <h1 class="text-4xl font-extrabold mb-8 text-center text-indigo-400 tracking-tight">
+      Contact Us
+    </h1>
+
+    <p class="text-lg text-gray-300 mb-10 leading-relaxed text-center">
+      Got a question, a spark of genius, or a beautifully chaotic idea?
+      Drop us a message — we reply faster than a kettle boils.
+    </p>
+
+    <form 
+      action="https://fabform.io/f/1fNg9gh"
+      method="POST"
+      class="space-y-8 max-w-md mx-auto"
+    >
+
+      <!-- Name -->
+      <div>
+        <label class="block text-gray-300 font-semibold mb-2">Name</label>
+        <input 
+          type="text" 
+          name="name" 
+          required
+          class="w-full px-4 py-3 rounded-xl 
+                 !bg-gray-100 !text-gray-900 !placeholder-gray-600
+                 border border-gray-300 shadow-md
+                 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none"
+          placeholder="Your name"
+        />
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block text-gray-300 font-semibold mb-2">Email</label>
+        <input 
+          type="email" 
+          name="email" 
+          required
+          class="w-full px-4 py-3 rounded-xl 
+                 !bg-gray-100 !text-gray-900 !placeholder-gray-600
+                 border border-gray-300 shadow-md
+                 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none"
+          placeholder="you@example.com"
+        />
+      </div>
+
+      <!-- Message -->
+      <div>
+        <label class="block text-gray-300 font-semibold mb-2">Message</label>
+        <textarea
+          name="message"
+          rows="6"
+          required
+          class="w-full px-4 py-3 rounded-xl 
+                 !bg-gray-100 !text-gray-900 !placeholder-gray-600
+                 border border-gray-300 shadow-md
+                 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none"
+          placeholder="Tell us what's on your mind"
+        ></textarea>
+      </div>
+
+      <!-- Sexy Normal Send Button -->
+      <div class="text-center">
+        <button
+          type="submit"
+          class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg
+                 hover:bg-indigo-700 transition shadow-md hover:shadow-lg
+                 hover:-translate-y-0.5 transform"
+        >
+          Send
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Fabform link -->
+    <div class="mt-12 text-center">
+      <a 
+        href="https://fabform.io" 
+        target="_blank" 
+        class="inline-block text-sm font-semibold text-indigo-400 hover:text-indigo-300 
+               transition transform hover:scale-110 hover:underline underline-offset-4 decoration-wavy"
+      >
+        Powered by Fabform.io
+      </a>
+    </div>
+
+  </div>
+</div>
 
