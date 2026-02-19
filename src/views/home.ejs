@@ -1,0 +1,72 @@
+<section class="pt-24 pb-20 text-center max-w-4xl mx-auto px-6">
+
+  <!-- Hero Title -->
+  <h1 class="text-6xl font-extrabold tracking-tight text-pink-300 drop-shadow-[0_0_25px_rgba(236,72,153,0.35)] mb-6">
+    Fancy a Bit of Nooky?
+  </h1>
+
+  <!-- Hero Subtext -->
+  <p class="text-xl text-slate-400 leading-relaxed max-w-2xl mx-auto mb-8">
+    Welcome to <span class="text-pink-300 font-semibold">NookyUp</span> — the cheeky, 
+    tongue‑in‑cheek personal ads playground for grown‑ups who know exactly what they’re after.
+    A little flirty, a little bold, and just the right amount of 
+    <span class="italic">“wink wink, nudge nudge.”</span>
+  </p>
+
+  <p class="text-lg text-slate-400 mb-16">
+    Pick your country <span class="font-semibold text-pink-300">and city</span> to begin your…  
+    let’s call it “browsing for like‑minded company.”
+  </p>
+
+</section>
+
+
+<!-- Country Grid -->
+<div class="max-w-4xl mx-auto pb-20 px-6">
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+
+    <% countries.forEach(c => { %>
+      <a 
+        href="/<%= c.country_code %>"
+        class="
+          nookyup-hover
+          block p-8 rounded-xl
+          bg-slate-900/30 border border-slate-800/50 backdrop-blur-xl
+          text-slate-200
+
+          transition-all duration-500
+
+          hover:scale-[1.06]
+          hover:bg-gradient-to-r
+          hover:from-pink-600/30
+          hover:via-fuchsia-500/20
+          hover:to-purple-600/30
+          hover:shadow-[0_0_55px_rgba(236,72,153,0.8)]
+          hover:border-pink-500/80
+          hover:text-pink-200
+        "
+      >
+        <h2 class="text-3xl font-semibold flex items-center gap-3 tracking-wide">
+          <span><%= c.flag_emoji %></span>
+          <span><%= c.country_name %></span>
+        </h2>
+
+        <!-- Country-specific cheeky tagline -->
+        <p class="text-slate-400 mt-3 text-sm italic">
+          <% if (c.country_code === 'ie') { %>
+            Ireland: Sure look… the craic’s mighty and the nooky’s even mightier.
+          <% } else if (c.country_code === 'uk' ) { %>
+            The UK: A groovy little hotspot for cheeky nooky… oh behave.
+          <% } else { %>
+            Looking for a bit of nooky in <%= c.country_name %>? Go on then…
+          <% } %>
+        </p>
+
+      </a>
+    <% }) %>
+
+  </div>
+
+</div>
+
