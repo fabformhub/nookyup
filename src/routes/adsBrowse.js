@@ -1,36 +1,26 @@
+// adsBrowse.js
 import express from "express";
-import {
-  showCountries,
-  showCities,
-  showCategories,
-  showSubcategories,
-  showAds,
-  showAdDetail
-} from "../controllers/adsBrowseController.js";
+import { browse } from "../controllers/adsBrowseController.js";
 
 const router = express.Router();
 
-/* -------------------------------------------
-   PUBLIC AD BROWSING ROUTES
-------------------------------------------- */
+// City only
+router.get("/:citySlug", browse);
 
-// Top-level: list all countries
-router.get("/", showCountries);
+// Country + city
+router.get("/:countrySlug/:citySlug", browse);
 
-// Country → list cities
-router.get("/:country", showCities);
+// City + category + ID
+router.get("/:citySlug/:categorySlug/:categoryId", browse);
 
-// City → list categories
-router.get("/:country/:city", showCategories);
+// Country + city + category + ID
+router.get("/:countrySlug/:citySlug/:categorySlug/:categoryId", browse);
 
-// Category → list subcategories
-router.get("/:country/:city/:category", showSubcategories);
+// City + category + ID + subcategory + subcategory ID
+router.get("/:citySlug/:categorySlug/:categoryId/:subcategorySlug/:subcategoryId", browse);
 
-// Subcategory → list ads
-router.get("/:country/:city/:category/:subcategory", showAds);
-
-// Ad detail page
-router.get("/:country/:city/:category/:subcategory/:id", showAdDetail);
+// Country + city + category + ID + subcategory + subcategory ID
+router.get("/:countrySlug/:citySlug/:categorySlug/:categoryId/:subcategorySlug/:subcategoryId", browse);
 
 export default router;
 

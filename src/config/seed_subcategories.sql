@@ -1,53 +1,45 @@
 INSERT INTO subcategories (category_id, name, slug) VALUES
--- MSW
-(1, 'Long Term', 'lt'),
-(1, 'Short Term', 'st'),
-(1, 'Casual', 'cas'),
-(1, 'Friendship', 'fr'),
+-- Men Seeking Women
+(1, 'Dating', 'dating'),
+(1, 'Casual Fun', 'casual-fun'),
+(1, 'Long Term', 'long-term'),
 
--- MSM
-(2, 'Dates', 'dat'),
-(2, 'Hookups', 'hk'),
-(2, 'Regular Meets', 'rm'),
+-- Men Seeking Men
+(2, 'Casual', 'casual'),
+(2, 'Bears', 'bears'),
+(2, 'Twinks', 'twinks'),
 
--- WSM
-(3, 'Romance', 'rom'),
-(3, 'Casual', 'cas'),
-(3, 'Friendship', 'fr'),
+-- Women Seeking Men
+(3, 'Dating', 'dating'),
+(3, 'Casual Fun', 'casual-fun'),
+(3, 'Long Term', 'long-term'),
 
--- WSW
-(4, 'Dating', 'dat'),
-(4, 'Friendship', 'fr'),
-(4, 'Casual', 'cas'),
+-- Women Seeking Women
+(4, 'Romantic', 'romantic'),
+(4, 'Casual', 'casual'),
+(4, 'Friendship', 'friendship'),
 
 -- Casual Encounters
-(5, 'One Night', '1n'),
-(5, 'Regular Meetups', 'rm'),
-(5, 'Anonymous', 'anon'),
+(5, 'One Night', 'one-night'),
+(5, 'Friends With Benefits', 'friends-with-benefits'),
 
--- Serious
-(6, 'Marriage Minded', 'mar'),
-(6, 'Long Term', 'lt'),
-(6, 'Committed', 'com'),
+-- Serious Relationships
+(6, 'Marriage Minded', 'marriage-minded'),
+(6, 'Long Term', 'long-term'),
 
 -- Friends & Chat
-(7, 'Local Chat', 'lc'),
-(7, 'Online Only', 'oo'),
-(7, 'Activity Partners', 'ap'),
+(7, 'Online Chat', 'online-chat'),
+(7, 'Penpals', 'penpals'),
 
--- Kinks
+-- Kinks & Fetish
 (8, 'BDSM', 'bdsm'),
-(8, 'Roleplay', 'rp'),
-(8, 'Feet', 'ft'),
-(8, 'Dom/Sub', 'ds'),
+(8, 'Roleplay', 'roleplay'),
 
--- Swingers
-(9, 'Couples Swap', 'cs'),
-(9, 'Group Fun', 'gf'),
-(9, 'Soft Swap', 'ss'),
+-- Swingers & Couples
+(9, 'Couples', 'couples'),
+(9, 'Group Fun', 'group-fun'),
 
--- NSA
-(10, 'Discreet Meetups', 'dm'),
-(10, 'NSA Only', 'nsa'),
-(10, 'Anonymous', 'anon');
+-- Discreet & NSA
+(10, 'No Strings', 'no-strings'),
+(10, 'Discreet Meets', 'discreet-meets');
 

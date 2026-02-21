@@ -1,38 +1,56 @@
--- USERS
-CREATE TABLE IF NOT EXISTS users (
+-- Drop existing tables (order matters because of foreign keys)
+DROP TABLE IF EXISTS ads;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS subcategories;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS locations;
+DROP TABLE IF EXISTS countries;
+DROP TABLE IF EXISTS users;
+
+------------------------------------------------------------
+-- Users
+------------------------------------------------------------
+CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  email TEXT UNIQUE NOT NULL,
-  username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL,
+  username TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- COUNTRIES
-CREATE TABLE IF NOT EXISTS countries (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  country_code TEXT NOT NULL UNIQUE,   -- uk, ie, us
-  country_name TEXT NOT NULL,          -- United Kingdom, Ireland, United States
-  flag_emoji TEXT,                     -- 🇬🇧 🇮🇪 🇺🇸
-  sort_order INTEGER DEFAULT 0         -- homepage ordering
-);
-
--- LOCATIONS
-CREATE TABLE IF NOT EXISTS locations (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  country_code TEXT NOT NULL,          -- links to countries.country_code
-  city_name TEXT NOT NULL,
-  slug TEXT NOT NULL UNIQUE
-);
-
--- CATEGORIES
-CREATE TABLE IF NOT EXISTS categories (
+------------------------------------------------------------
+-- Countries
+------------------------------------------------------------
+CREATE TABLE countries (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   slug TEXT NOT NULL UNIQUE
 );
 
--- SUBCATEGORIES
-CREATE TABLE IF NOT EXISTS subcategories (
+------------------------------------------------------------
+-- Locations
+------------------------------------------------------------
+CREATE TABLE locations (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  slug TEXT NOT NULL,
+  country_slug TEXT NOT NULL,
+  FOREIGN KEY (country_slug) REFERENCES countries(slug)
+);
+
+------------------------------------------------------------
+-- Categories
+------------------------------------------------------------
+CREATE TABLE categories (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  slug TEXT NOT NULL UNIQUE
+);
+
+------------------------------------------------------------
+-- Subcategories
+------------------------------------------------------------
+CREATE TABLE subcategories (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   category_id INTEGER NOT NULL,
   name TEXT NOT NULL,
@@ -40,41 +58,37 @@ CREATE TABLE IF NOT EXISTS subcategories (
   FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
--- ADS
-CREATE TABLE IF NOT EXISTS ads (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER NOT NULL,
-  title TEXT NOT NULL,
-  body TEXT NOT NULL,
-  category_slug TEXT NOT NULL,
-  subcategory_slug TEXT,
-  location_slug TEXT NOT NULL,
-  status TEXT DEFAULT 'pending',
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
--- FLAGS
-CREATE TABLE IF NOT EXISTS flags (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  ad_id INTEGER NOT NULL,
-  reason TEXT NOT NULL,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (ad_id) REFERENCES ads(id)
-);
-
--- MESSAGES
-CREATE TABLE IF NOT EXISTS messages (
+------------------------------------------------------------
+-- Messages
+------------------------------------------------------------
+CREATE TABLE messages (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   sender_id INTEGER NOT NULL,
   receiver_id INTEGER NOT NULL,
-  ad_id INTEGER NOT NULL,
-  body TEXT NOT NULL,
+  ad_id INTEGER,
+  content TEXT NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (sender_id) REFERENCES users(id),
   FOREIGN KEY (receiver_id) REFERENCES users(id),
   FOREIGN KEY (ad_id) REFERENCES ads(id)
 );
 
+------------------------------------------------------------
+-- Ads
+------------------------------------------------------------
+CREATE TABLE ads (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  category_id INTEGER NOT NULL,
+  subcategory_id INTEGER,
+  location_id INTEGER NOT NULL,
+  status TEXT NOT NULL DEFAULT 'active',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (category_id) REFERENCES categories(id),
+  FOREIGN KEY (subcategory_id) REFERENCES subcategories(id),
+  FOREIGN KEY (location_id) REFERENCES locations(id)
+);
 

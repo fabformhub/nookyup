@@ -1,11 +1,12 @@
 INSERT INTO categories (name, slug) VALUES
-('Men Seeking Women', 'msw'),
-('Men Seeking Men', 'msm'),
-('Women Seeking Men', 'wsm'),
-('Women Seeking Women', 'wsw'),
-('Casual Encounters', 'cas'),
-('Serious Relationships', 'ser'),
-('Friends & Chat', 'chat'),
-('Kinks & Fetish', 'kink'),
-('Swingers & Couples', 'swg'),
-('Discreet & NSA', 'nsa');
+('Men Seeking Women', 'men-seeking-women'),
+('Men Seeking Men', 'men-seeking-men'),
+('Women Seeking Men', 'women-seeking-men'),
+('Women Seeking Women', 'women-seeking-women'),
+('Casual Encounters', 'casual-encounters'),
+('Serious Relationships', 'serious-relationships'),
+('Friends & Chat', 'friends-chat'),
+('Kinks & Fetish', 'kinks-fetish'),
+('Swingers & Couples', 'swingers-couples'),
+('Discreet & NSA', 'discreet-nsa');
+
