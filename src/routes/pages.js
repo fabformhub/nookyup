@@ -6,7 +6,10 @@ const router = express.Router();
 
 // HOMEPAGE
 router.get("/", (req, res) => {
-  const countries = db.prepare("SELECT * FROM countries ORDER BY country_name ASC").all();
+  const countries = db
+    .prepare("SELECT * FROM countries ORDER BY name ASC")
+    .all();
+
   res.render("home", { countries });
 });
 

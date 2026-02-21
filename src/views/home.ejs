@@ -28,7 +28,7 @@
 
     <% countries.forEach(c => { %>
       <a 
-        href="/<%= c.country_code %>"
+        href="/<%= c.slug %>"
         class="
           nookyup-hover
           block p-8 rounded-xl
@@ -48,18 +48,18 @@
         "
       >
         <h2 class="text-3xl font-semibold flex items-center gap-3 tracking-wide">
-          <span><%= c.flag_emoji %></span>
-          <span><%= c.country_name %></span>
+          <span><%= getFlagEmoji(c.slug) %></span>
+          <span><%= c.name %></span>
         </h2>
 
         <!-- Country-specific cheeky tagline -->
         <p class="text-slate-400 mt-3 text-sm italic">
-          <% if (c.country_code === 'ie') { %>
+          <% if (c.slug === 'ie') { %>
             Ireland: Sure look… the craic’s mighty and the nooky’s even mightier.
-          <% } else if (c.country_code === 'uk' ) { %>
+          <% } else if (c.slug === 'uk') { %>
             The UK: A groovy little hotspot for cheeky nooky… oh behave.
           <% } else { %>
-            Looking for a bit of nooky in <%= c.country_name %>? Go on then…
+            Looking for a bit of nooky in <%= c.name %>? Go on then…
           <% } %>
         </p>
 

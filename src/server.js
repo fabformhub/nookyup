@@ -14,6 +14,9 @@ const __dirname = path.dirname(__filename);
 const SQLiteStore = SQLiteStoreFactory(session);
 const app = express();
 
+import { getFlagEmoji } from "./utils/flags.js";
+app.locals.getFlagEmoji = getFlagEmoji;
+
 // -----------------------------
 // STATIC FILES
 // -----------------------------

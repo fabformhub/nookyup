@@ -3,9 +3,9 @@ import db from "../config/db.js";
 export const home = (req, res) => {
   try {
     const countries = db.prepare(`
-      SELECT DISTINCT country_code
-      FROM locations
-      ORDER BY country_code ASC
+      SELECT id, name, slug
+      FROM countries
+      ORDER BY name ASC
     `).all();
 
     res.render("home", { countries });
