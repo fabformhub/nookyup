@@ -142,4 +142,58 @@
   opacity: 1;
 }
 
+/* Make "Powered by Google Translate" tiny + subtle */
+.goog-logo-link {
+  font-size: 0.6rem !important;
+  opacity: 0.4 !important;
+  color: #94a3b8 !important; /* slate-400 */
+  text-decoration: none !important;
+  margin-left: 6px !important;
+}
+
+.goog-logo-link img {
+  width: 10px !important;
+  height: 10px !important;
+  opacity: 0.5 !important;
+}
+
+/* Keep badge inline and compact */
+.goog-te-gadget {
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Remove container styling */
+#google_translate_element,
+#google_translate_element_mobile {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Make dropdown tiny + flat */
+#google_translate_element select,
+#google_translate_element_mobile select {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: auto !important;
+  font-size: 0.85rem !important;
+  color: #cbd5e1 !important; /* slate-300 */
+  cursor: pointer;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* Dropdown options readable */
+#google_translate_element select option,
+#google_translate_element_mobile select option {
+  color: #000 !important;
+}
 

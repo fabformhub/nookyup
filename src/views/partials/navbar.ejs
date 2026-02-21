@@ -19,98 +19,32 @@
     <!-- Desktop Nav -->
     <div class="hidden md:flex items-center gap-6 text-lg font-medium text-slate-300">
 
-      <a 
-        href="/"
-        class="
-          px-4 py-2 rounded-full transition-all duration-300
-          hover:text-pink-300 hover:scale-[1.05]
-          <%= currentRoute === '/' ? 'active-pill' : '' %>
-        "
-      >
-        Home
-      </a>
+      <a href="/" class="px-4 py-2 rounded-full transition-all duration-300 hover:text-pink-300 hover:scale-[1.05] <%= currentRoute === '/' ? 'active-pill' : '' %>">Home</a>
 
-      <a 
-        href="/about"
-        class="
-          px-4 py-2 rounded-full transition-all duration-300
-          hover:text-pink-300 hover:scale-[1.05]
-          <%= currentRoute.startsWith('/about') ? 'active-pill' : '' %>
-        "
-      >
-        About
-      </a>
+      <a href="/about" class="px-4 py-2 rounded-full transition-all duration-300 hover:text-pink-300 hover:scale-[1.05] <%= currentRoute.startsWith('/about') ? 'active-pill' : '' %>">About</a>
 
-      <a 
-        href="/contact"
-        class="
-          px-4 py-2 rounded-full transition-all duration-300
-          hover:text-pink-300 hover:scale-[1.05]
-          <%= currentRoute.startsWith('/contact') ? 'active-pill' : '' %>
-        "
-      >
-        Contact
-      </a>
+      <a href="/contact" class="px-4 py-2 rounded-full transition-all duration-300 hover:text-pink-300 hover:scale-[1.05] <%= currentRoute.startsWith('/contact') ? 'active-pill' : '' %>">Contact</a>
 
       <% if (!user) { %>
-
-        <a 
-          href="/login"
-          class="
-            px-4 py-2 rounded-full transition-all duration-300
-            hover:text-pink-300 hover:scale-[1.05]
-            <%= currentRoute.startsWith('/login') ? 'active-pill' : '' %>
-          "
-        >
-          Login
-        </a>
-
-        <a 
-          href="/signup"
-          class="
-            px-4 py-2 rounded-full transition-all duration-300
-            hover:text-pink-300 hover:scale-[1.05]
-            <%= currentRoute.startsWith('/signup') ? 'active-pill' : '' %>
-          "
-        >
-          Sign Up
-        </a>
-
+        <a href="/login" class="px-4 py-2 rounded-full transition-all duration-300 hover:text-pink-300 hover:scale-[1.05] <%= currentRoute.startsWith('/login') ? 'active-pill' : '' %>">Login</a>
+        <a href="/signup" class="px-4 py-2 rounded-full transition-all duration-300 hover:text-pink-300 hover:scale-[1.05] <%= currentRoute.startsWith('/signup') ? 'active-pill' : '' %>">Sign Up</a>
       <% } else { %>
-
-        <a 
-          href="/dashboard"
-          class="
-            px-4 py-2 rounded-full transition-all duration-300
-            hover:text-pink-300 hover:scale-[1.05]
-            <%= currentRoute.startsWith('/dashboard') ? 'active-pill' : '' %>
-          "
-        >
-          Dashboard
-        </a>
-
-        <a 
-          href="/logout"
-          class="
-            px-4 py-2 rounded-full transition-all duration-300
-            hover:text-pink-300 hover:scale-[1.05]
-          "
-        >
-          Logout
-        </a>
-
+        <a href="/dashboard" class="px-4 py-2 rounded-full transition-all duration-300 hover:text-pink-300 hover:scale-[1.05] <%= currentRoute.startsWith('/dashboard') ? 'active-pill' : '' %>">Dashboard</a>
+        <a href="/logout" class="px-4 py-2 rounded-full transition-all duration-300 hover:text-pink-300 hover:scale-[1.05]">Logout</a>
       <% } %>
+
+      <!-- Google Translate (Desktop) -->
+      <div class="flex items-center gap-1">
+        <span class="text-slate-400 text-sm">Language:</span>
+        <div id="google_translate_element"></div>
+      </div>
 
     </div>
 
     <!-- Mobile Menu Button -->
     <button 
       id="mobileMenuBtn" 
-      class="
-        md:hidden text-3xl text-slate-300 
-        transition-all duration-300 
-        hover:text-pink-400 hover:scale-[1.1]
-      "
+      class="md:hidden text-3xl text-slate-300 transition-all duration-300 hover:text-pink-400 hover:scale-[1.1]"
     >
       ☰
     </button>
@@ -136,15 +70,35 @@
       <a href="/dashboard" class="px-4 py-2 rounded-lg hover:text-pink-300 transition-all duration-300">Dashboard</a>
       <a href="/logout" class="px-4 py-2 rounded-lg hover:text-pink-300 transition-all duration-300">Logout</a>
     <% } %>
+
+    <!-- Google Translate (Mobile) -->
+    <div class="flex items-center gap-1 mt-2">
+      <span class="text-slate-400 text-sm">Language:</span>
+      <div id="google_translate_element_mobile"></div>
+    </div>
+
   </div>
 </nav>
 
 <script>
   const btn = document.getElementById("mobileMenuBtn");
   const menu = document.getElementById("mobileMenu");
-
-  btn?.addEventListener("click", () => {
-    menu.classList.toggle("open");
-  });
+  btn?.addEventListener("click", () => menu.classList.toggle("open"));
 </script>
+
+<!-- Google Translate Scripts -->
+<script>
+  function googleTranslateElementInit() {
+    const config = {
+      pageLanguage: 'en',
+      includedLanguages: 'en,zh-CN,es,hi,ar,bn,pt,ru,ja,pa,de,jv,ko,fr,te,mr,tr,ta,vi,ur',
+      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+    };
+
+    new google.translate.TranslateElement(config, 'google_translate_element');
+    new google.translate.TranslateElement(config, 'google_translate_element_mobile');
+  }
+</script>
+
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 

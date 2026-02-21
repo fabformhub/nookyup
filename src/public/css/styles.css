@@ -795,6 +795,10 @@ video {
   justify-content: space-between;
 }
 
+.gap-1 {
+  gap: 0.25rem;
+}
+
 .gap-10 {
   gap: 2.5rem;
 }
@@ -1387,9 +1391,9 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.shadow-sm {
-  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+.shadow-md {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -1597,6 +1601,73 @@ video {
 .mobile-slide.open {
   max-height: 300px;
   opacity: 1;
+}
+
+/* Make "Powered by Google Translate" tiny + subtle */
+
+.goog-logo-link {
+  font-size: 0.6rem !important;
+  opacity: 0.4 !important;
+  color: #94a3b8 !important;
+  /* slate-400 */
+  text-decoration: none !important;
+  margin-left: 6px !important;
+}
+
+.goog-logo-link img {
+  width: 10px !important;
+  height: 10px !important;
+  opacity: 0.5 !important;
+}
+
+/* Keep badge inline and compact */
+
+.goog-te-gadget {
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Remove container styling */
+
+#google_translate_element,
+#google_translate_element_mobile {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Make dropdown tiny + flat */
+
+#google_translate_element select,
+#google_translate_element_mobile select {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: auto !important;
+  font-size: 0.85rem !important;
+  color: #cbd5e1 !important;
+  /* slate-300 */
+  cursor: pointer;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* Dropdown options readable */
+
+#google_translate_element select option,
+#google_translate_element_mobile select option {
+  color: #000 !important;
+}
+
+.hover\:-translate-y-0\.5:hover {
+  --tw-translate-y: -0.125rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .hover\:scale-110:hover {
@@ -1836,6 +1907,12 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.hover\:shadow-lg:hover {
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .focus\:border-indigo-500:focus {
   --tw-border-opacity: 1;
   border-color: rgb(99 102 241 / var(--tw-border-opacity, 1));
@@ -1893,5 +1970,4 @@ video {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
-
 
