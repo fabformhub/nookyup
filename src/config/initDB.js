@@ -11,7 +11,8 @@ const __dirname = path.dirname(__filename);
 // Generate hashed password for seed user
 const passwordHash = bcrypt.hashSync("B@ckinDerry!1a", 10);
 
-// Path to unified seed file
+// Paths to schema + seed files
+const schemaPath = path.join(__dirname, "schema.sql");
 const seedPath = path.join(__dirname, "seed.sql");
 
 // Delete old DB
@@ -36,7 +37,10 @@ function runSQL(filePath, replacements = {}) {
   console.log(`Executed: ${path.basename(filePath)}`);
 }
 
-// Run unified seed
+// Run schema first
+runSQL(schemaPath);
+
+// Then seed data
 runSQL(seedPath, { PASSWORD_HASH: passwordHash });
 
 console.log("Database initialized successfully.");
