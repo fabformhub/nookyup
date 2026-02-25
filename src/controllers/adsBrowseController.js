@@ -1,7 +1,6 @@
 // src/controllers/adsBrowseController.js
 import db from "../config/db.js";
 
-// Helper to build canonical URLs
 function buildUrl(parts) {
   return "/" + parts.filter(Boolean).join("/");
 }
@@ -20,7 +19,7 @@ export const browse = (req, res) => {
   // 1. CITY LOOKUP (required)
   //
   const city = db.prepare(`
-    SELECT id, name, slug, country_slug
+    SELECT id, name, slug, country_id
     FROM locations
     WHERE slug = ?
   `).get(citySlug);
@@ -41,7 +40,6 @@ export const browse = (req, res) => {
 
     if (!category) return res.status(404).send("Category not found");
 
-    // Canonical redirect if slug mismatch
     if (category.slug !== categorySlug) {
       return res.redirect(
         301,
@@ -69,7 +67,6 @@ export const browse = (req, res) => {
 
     if (!subcategory) return res.status(404).send("Subcategory not found");
 
-    // Canonical redirect if slug mismatch
     if (subcategory.slug !== subcategorySlug) {
       return res.redirect(
         301,
@@ -86,10 +83,10 @@ export const browse = (req, res) => {
   }
 
   //
-  // 4. BUILD DYNAMIC SQL FILTERS
+  // 4. BUILD FILTERS (corrected)
   //
-  const filters = ["ads.location_slug = ?"];
-  const params = [citySlug];
+  const filters = ["ads.location_id = ?"];
+  const params = [city.id];
 
   if (category) {
     filters.push("ads.category_id = ?");
@@ -112,7 +109,7 @@ export const browse = (req, res) => {
   const ads = db.prepare(sql).all(...params);
 
   //
-  // 5. RENDER PAGE
+  // 5. RENDER
   //
   res.render("browse", {
     city,
@@ -121,3 +118,4 @@ export const browse = (req, res) => {
     ads
   });
 };
+

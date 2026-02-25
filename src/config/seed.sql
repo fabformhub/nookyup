@@ -54,7 +54,7 @@ INSERT INTO subcategories (category_id, name, slug) VALUES
 (10,'No Strings','no-strings'),
 (10,'Discreet Meets','discreet-meets');
 
-INSERT INTO users (username, email, password_hash) VALUES
+INSERT INTO users (username, email, password) VALUES
 ('irishgeoff','irishgeoff@yahoo.com','{{PASSWORD_HASH}}');
 
 INSERT INTO ads (user_id,title,description,category_id,subcategory_id,location_id) VALUES

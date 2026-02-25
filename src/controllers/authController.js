@@ -3,7 +3,7 @@ import db from "../config/db.js";
 
 export function logout(req, res) {
   req.session.destroy(() => {
-    res.redirect("/login");
+    res.redirect("/auth/login");
   });
 }
 
