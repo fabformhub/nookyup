@@ -154,20 +154,29 @@ import dashboardRoutes from "./routes/dashboard.js";  // /dashboard
 //import adminRoutes from "./routes/admin.js";          // /admin
 //import messagesRoutes from "./routes/messages.js";    // /messages
 import apiRoutes from "./routes/api.js";              // /api/*
-import adsBrowseRoutes from "./routes/adsBrowse.js";
+//import adsBrowseRoutes from "./routes/adsBrowse.js";
 import pageRoutes from "./routes/pages.js";
 // import paymentRoutes from "./routes/paymentRoutes.js";
+import locationsRouter from "./routes/locations.js";
+import categoriesRouter from "./routes/categories.js";
+import subcategoriesRouter from "./routes/subcategories.js";
+import adsRouter from "./routes/ads.js";
+import singleAdRouter from "./routes/singleAd.js";
 
 // SYSTEM ROUTES
 
 //app.use("/", paymentRoutes);
 app.use("/auth", authRoutes);
-app.use("/", pageRoutes);
 app.use("/dashboard", dashboardRoutes);
+app.use("/", pageRoutes);
 //app.use("/admin", adminRoutes);
 //app.use("/messages", messagesRoutes);
-app.use("/", adsBrowseRoutes);
-
+app.use("/", locationsRouter);
+app.use("/", categoriesRouter);
+app.use("/", subcategoriesRouter);
+app.use("/", adsRouter);
+app.use("/", singleAdRouter);
+//app.use("/", adsBrowseRoutes);
 //
 // -----------------------------
 // API ROUTES

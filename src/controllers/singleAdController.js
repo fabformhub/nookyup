@@ -1,14 +1,15 @@
-// src/controllers/adsController.js
+// src/controllers/singleAdController.js
 import db from "../config/db.js";
 
-export const listAds = (req, res) => {
+export const viewAd = (req, res) => {
   const {
     countrySlug,
     locationSlug,
     categorySlug,
     categoryId,
     subcategorySlug,
-    subcategoryId
+    subcategoryId,
+    adId
   } = req.params;
 
   // 1. Country
@@ -47,26 +48,22 @@ export const listAds = (req, res) => {
 
   if (!subcategory) return res.status(404).send("Subcategory not found");
 
-  // 5. Fetch ads for this subcategory
- 
- const ads = db.prepare(`
-  SELECT ads.id, ads.title, ads.description, ads.created_at
-  FROM ads
-  JOIN locations ON ads.location_id = locations.id
-  WHERE ads.category_id = ?
-    AND ads.subcategory_id = ?
-    AND ads.location_id = ?
-    AND locations.country_id = ?
-  ORDER BY ads.created_at DESC
-`).all(category.id, subcategory.id, location.id, country.id);
+  // 5. Ad
+  const ad = db.prepare(`
+    SELECT id, title, description, created_at
+    FROM ads
+    WHERE id = ? AND subcategory_id = ?
+  `).get(adId, subcategory.id);
+
+  if (!ad) return res.status(404).send("Ad not found");
 
   // 6. Render
-  res.render("ads", {
+  res.render("single-ad", {
     country,
     location,
     category,
-    subcategory,   // MUST be singular — ads.ejs depends on this
-    ads
+    subcategory,
+    ad
   });
 };
 

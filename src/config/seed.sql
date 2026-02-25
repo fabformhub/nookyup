@@ -1,163 +1,186 @@
-INSERT INTO countries (name, slug) VALUES
-('Ireland','ie'),
-('United Kingdom','uk'),
-('Canada','ca'),
-('United States','us');
+-- Countries
+INSERT INTO countries (id, name, slug) VALUES
+(1, 'Ireland','ie'),
+(2, 'United Kingdom','uk'),
+(3, 'Canada','ca'),
+(4, 'United States','us');
 
-INSERT INTO locations (name, slug, country_id) VALUES
-('Manchester','manchester',2),
-('London','london',2),
-('Birmingham','birmingham',2),
-('Liverpool','liverpool',2),
-('Leeds','leeds',2),
-('Glasgow','glasgow',2),
-('Edinburgh','edinburgh',2),
-('Cardiff','cardiff',2),
-('Bristol','bristol',2),
-('Sheffield','sheffield',2);
+-- Locations (UK)
+INSERT INTO locations (id, name, slug, country_id) VALUES
+(1,'Manchester','manchester',2),
+(2,'London','london',2),
+(3,'Birmingham','birmingham',2),
+(4,'Liverpool','liverpool',2),
+(5,'Leeds','leeds',2),
+(6,'Glasgow','glasgow',2),
+(7,'Edinburgh','edinburgh',2),
+(8,'Cardiff','cardiff',2),
+(9,'Bristol','bristol',2),
+(10,'Sheffield','sheffield',2);
 
-INSERT INTO categories (name, slug) VALUES
-('Men Seeking Women','men-seeking-women'),
-('Men Seeking Men','men-seeking-men'),
-('Women Seeking Men','women-seeking-men'),
-('Women Seeking Women','women-seeking-women'),
-('Casual Encounters','casual-encounters'),
-('Serious Relationships','serious-relationships'),
-('Friends & Chat','friends-chat'),
-('Kinks & Fetish','kinks-fetish'),
-('Swingers & Couples','swingers-couples'),
-('Discreet & NSA','discreet-nsa');
+-- Categories (new taxonomy)
+INSERT INTO categories (id, name, slug) VALUES
+(1, 'Long Term Relationships', 'long-term-relationships'),
+(2, 'Short Term Relationships', 'short-term-relationships'),
+(3, 'Personal Services', 'personal-services');
 
-INSERT INTO subcategories (category_id, name, slug) VALUES
-(1,'Dating','dating'),
-(1,'Casual Fun','casual-fun'),
-(1,'Long Term','long-term'),
-(2,'Casual','casual'),
-(2,'Bears','bears'),
-(2,'Twinks','twinks'),
-(3,'Dating','dating'),
-(3,'Casual Fun','casual-fun'),
-(3,'Long Term','long-term'),
-(4,'Romantic','romantic'),
-(4,'Casual','casual'),
-(4,'Friendship','friendship'),
-(5,'One Night','one-night'),
-(5,'Friends With Benefits','friends-with-benefits'),
-(6,'Marriage Minded','marriage-minded'),
-(6,'Long Term','long-term'),
-(7,'Online Chat','online-chat'),
-(7,'Penpals','penpals'),
-(8,'BDSM','bdsm'),
-(8,'Roleplay','roleplay'),
-(9,'Couples','couples'),
-(9,'Group Fun','group-fun'),
-(10,'No Strings','no-strings'),
-(10,'Discreet Meets','discreet-meets');
+-- Subcategories
+INSERT INTO subcategories (id, category_id, name, slug) VALUES
+-- Long Term Relationships (category_id = 1)
+(1, 1, 'Women Seeking Men', 'women-seeking-men'),
+(2, 1, 'Men Seeking Women', 'men-seeking-women'),
+(3, 1, 'Men Seeking Men', 'men-seeking-men'),
+(4, 1, 'Women Seeking Women', 'women-seeking-women'),
 
-INSERT INTO users (username, email, password) VALUES
-('irishgeoff','irishgeoff@yahoo.com','{{PASSWORD_HASH}}');
+-- Short Term Relationships (category_id = 2)
+(5, 2, 'Women Seeking Men', 'women-seeking-men'),
+(6, 2, 'Men Seeking Women', 'men-seeking-women'),
+(7, 2, 'Men Seeking Men', 'men-seeking-men'),
+(8, 2, 'Women Seeking Women', 'women-seeking-women'),
+(9, 2, 'Couples Seeking Women', 'couples-seeking-women'),
+(10, 2, 'Couples Seeking Men', 'couples-seeking-men'),
+(11, 2, 'Couples Seeking Couples', 'couples-seeking-couples'),
 
-INSERT INTO ads (user_id,title,description,category_id,subcategory_id,location_id) VALUES
-(1,'Manchester — Looking for genuine connection','Easygoing, friendly, and open to meeting someone real. Coffee first, see where it goes.',1,1,1),
-(1,'London — Casual meetups','No pressure, just good vibes. Discreet and respectful.',5,11,2),
-(1,'Liverpool — Up for chats and drinks','Let’s grab a drink and see if we click.',7,13,4),
-(1,'Leeds — Discreet meets only','Prefer privacy and maturity. No drama.',10,20,5),
-(1,'Birmingham — Long term vibes','Looking for something meaningful and lasting.',6,16,3),
-(1,'Glasgow — Friendly guy looking to meet','Open-minded and easygoing. Let’s chat.',1,2,6),
-(1,'Edinburgh — Coffee and conversation','Love deep chats and good company.',3,7,7),
-(1,'Cardiff — No strings fun','Just keeping things simple and fun.',5,11,8),
-(1,'Bristol — Looking for friendship first','Let’s build something real.',7,13,9),
-(1,'Sheffield — Open to new connections','Seeing who’s out there.',1,1,10),
+-- Personal Services (category_id = 3)
+(12, 3, 'Escorts', 'escorts'),
+(13, 3, 'Massage', 'massage');
 
-(1,'Manchester — Weekend coffee?','Chilled guy looking for someone to grab a weekend coffee with.',1,1,1),
-(1,'London — After-work drinks','Work is hectic, looking for someone to unwind with.',7,13,2),
-(1,'Birmingham — Casual chats','Not rushing anything, just seeing who’s around.',5,11,3),
-(1,'Liverpool — Looking for laughs','Sense of humour essential. Let’s keep it light.',7,14,4),
-(1,'Leeds — Mature meets','Prefer older, confident people who know what they want.',10,20,5),
-(1,'Glasgow — Exploring connections','Open to something casual or more.',1,2,6),
-(1,'Edinburgh — Book lover seeking same','If you love reading, we’ll get along.',3,7,7),
-(1,'Cardiff — No expectations','Let’s just vibe and see what happens.',5,11,8),
-(1,'Bristol — Friendly chats','Looking for someone genuine to talk to.',7,13,9),
-(1,'Sheffield — Open-minded guy','Happy to chat and meet if we click.',1,2,10),
+-- Users
+INSERT INTO users (id, username, email, password) VALUES
+(1,'irishgeoff','irishgeoff@yahoo.com','{{PASSWORD_HASH}}');
 
-(1,'Manchester — Gym buddy?','Looking for someone to train with and maybe more.',1,2,1),
-(1,'London — Discreet fun','Respectful, clean, and private meets only.',10,20,2),
-(1,'Birmingham — Long-term connection','Ready for something real.',6,16,3),
-(1,'Liverpool — Drinks and banter','Let’s keep it fun and relaxed.',7,13,4),
-(1,'Leeds — Coffee date?','Simple, easygoing, and friendly.',3,7,5),
-(1,'Glasgow — Looking for chemistry','If we click, great. If not, no worries.',1,1,6),
-(1,'Edinburgh — Walks and talks','Love exploring the city with good company.',3,7,7),
-(1,'Cardiff — No strings attached','Just keeping things simple.',5,11,8),
-(1,'Bristol — Friendship first','Let’s build something meaningful.',7,13,9),
-(1,'Sheffield — Open to ideas','Let’s chat and see what happens.',1,2,10),
+-- Ads (100 total: 10 per location, friendly tone, location mentioned)
+INSERT INTO ads (user_id, title, description, category_id, subcategory_id, location_id) VALUES
+-- Manchester (location_id = 1)
+(1,'Manchester — Women seeking men','Friendly Manchester local, women seeking men for long term in Manchester.',1,1,1),
+(1,'Manchester — Men seeking women','Manchester man seeking women for long term connection in Manchester.',1,2,1),
+(1,'Manchester — Men seeking men','Manchester resident, men seeking men for long term in Manchester.',1,3,1),
+(1,'Manchester — Women seeking women','Women seeking women around Manchester for long term connection.',1,4,1),
+(1,'Manchester — Short term, women seeking men','Open to short term women seeking men around Manchester.',2,5,1),
+(1,'Manchester — Short term, men seeking women','Short term men seeking women in the Manchester area.',2,6,1),
+(1,'Manchester — Short term, men seeking men','Short term men seeking men around Manchester.',2,7,1),
+(1,'Manchester — Short term, women seeking women','Short term women seeking women in Manchester.',2,8,1),
+(1,'Manchester — Couples seeking women','Couple in Manchester seeking women for short term connection.',2,9,1),
+(1,'Manchester — Couples seeking couples','Couple in Manchester seeking other couples locally.',2,11,1),
 
-(1,'Manchester — Looking for someone chilled','No drama, no pressure.',1,1,1),
-(1,'London — Casual chats','Happy to talk and meet if we vibe.',5,11,2),
-(1,'Birmingham — Seeking connection','Looking for someone genuine.',6,16,3),
-(1,'Liverpool — Friendly meetups','Let’s grab a drink.',7,13,4),
-(1,'Leeds — Discreet only','Privacy is important.',10,20,5),
-(1,'Glasgow — Open-minded','Seeing who’s around.',1,2,6),
-(1,'Edinburgh — Coffee lover','Let’s chat over a latte.',3,7,7),
-(1,'Cardiff — Fun times','Keeping it light.',5,11,8),
-(1,'Bristol — Looking for friends','Let’s talk.',7,13,9),
-(1,'Sheffield — New connections','Open to meeting.',1,1,10),
+-- London (location_id = 2)
+(1,'London — Women seeking men','Friendly London local, women seeking men for long term in London.',1,1,2),
+(1,'London — Men seeking women','London man seeking women for long term connection in London.',1,2,2),
+(1,'London — Men seeking men','London resident, men seeking men for long term in London.',1,3,2),
+(1,'London — Women seeking women','Women seeking women around London for long term connection.',1,4,2),
+(1,'London — Short term, women seeking men','Open to short term women seeking men around London.',2,5,2),
+(1,'London — Short term, men seeking women','Short term men seeking women in the London area.',2,6,2),
+(1,'London — Short term, men seeking men','Short term men seeking men around London.',2,7,2),
+(1,'London — Short term, women seeking women','Short term women seeking women in London.',2,8,2),
+(1,'London — Couples seeking women','Couple in London seeking women for short term connection.',2,9,2),
+(1,'London — Couples seeking couples','Couple in London seeking other couples locally.',2,11,2),
 
-(1,'Manchester — Late night chats','Night owl looking for someone similar.',7,13,1),
-(1,'London — Quick coffee?','In the area often, let’s meet.',1,1,2),
-(1,'Birmingham — Looking for real talk','Honest conversations only.',6,16,3),
-(1,'Liverpool — Chill vibes','Let’s keep it simple.',5,11,4),
-(1,'Leeds — Mature chats','Prefer older.',10,20,5),
-(1,'Glasgow — Friendly meet','Open-minded and relaxed.',1,2,6),
-(1,'Edinburgh — Bookshop dates','If you love books, we’ll get along.',3,7,7),
-(1,'Cardiff — No pressure','Just seeing who’s around.',5,11,8),
-(1,'Bristol — Looking for good company','Friendly and easygoing.',7,13,9),
-(1,'Sheffield — Open to chats','Let’s talk.',1,1,10),
+-- Birmingham (location_id = 3)
+(1,'Birmingham — Women seeking men','Friendly Birmingham local, women seeking men for long term in Birmingham.',1,1,3),
+(1,'Birmingham — Men seeking women','Birmingham man seeking women for long term connection in Birmingham.',1,2,3),
+(1,'Birmingham — Men seeking men','Birmingham resident, men seeking men for long term in Birmingham.',1,3,3),
+(1,'Birmingham — Women seeking women','Women seeking women around Birmingham for long term connection.',1,4,3),
+(1,'Birmingham — Short term, women seeking men','Open to short term women seeking men around Birmingham.',2,5,3),
+(1,'Birmingham — Short term, men seeking women','Short term men seeking women in the Birmingham area.',2,6,3),
+(1,'Birmingham — Short term, men seeking men','Short term men seeking men around Birmingham.',2,7,3),
+(1,'Birmingham — Short term, women seeking women','Short term women seeking women in Birmingham.',2,8,3),
+(1,'Birmingham — Couples seeking women','Couple in Birmingham seeking women for short term connection.',2,9,3),
+(1,'Birmingham — Couples seeking couples','Couple in Birmingham seeking other couples locally.',2,11,3),
 
-(1,'Manchester — Looking for a walking buddy','Love long walks and good conversation.',1,1,1),
-(1,'London — Coffee and a chat','Simple and relaxed.',7,13,2),
-(1,'Birmingham — Open to meeting','Seeing who’s around.',5,11,3),
-(1,'Liverpool — Friendly guy here','Let’s talk and see where it goes.',7,13,4),
-(1,'Leeds — Looking for something real','Ready for a connection.',6,16,5),
-(1,'Glasgow — Casual meets','Keeping it easy.',1,2,6),
-(1,'Edinburgh — Looking for someone genuine','Let’s chat.',3,7,7),
-(1,'Cardiff — Open-minded','Seeing what happens.',5,11,8),
-(1,'Bristol — Friendly and chilled','Let’s meet.',7,13,9),
-(1,'Sheffield — Looking for company','Open to ideas.',1,1,10),
+-- Liverpool (location_id = 4)
+(1,'Liverpool — Women seeking men','Friendly Liverpool local, women seeking men for long term in Liverpool.',1,1,4),
+(1,'Liverpool — Men seeking women','Liverpool man seeking women for long term connection in Liverpool.',1,2,4),
+(1,'Liverpool — Men seeking men','Liverpool resident, men seeking men for long term in Liverpool.',1,3,4),
+(1,'Liverpool — Women seeking women','Women seeking women around Liverpool for long term connection.',1,4,4),
+(1,'Liverpool — Short term, women seeking men','Open to short term women seeking men around Liverpool.',2,5,4),
+(1,'Liverpool — Short term, men seeking women','Short term men seeking women in the Liverpool area.',2,6,4),
+(1,'Liverpool — Short term, men seeking men','Short term men seeking men around Liverpool.',2,7,4),
+(1,'Liverpool — Short term, women seeking women','Short term women seeking women in Liverpool.',2,8,4),
+(1,'Liverpool — Couples seeking women','Couple in Liverpool seeking women for short term connection.',2,9,4),
+(1,'Liverpool — Couples seeking couples','Couple in Liverpool seeking other couples locally.',2,11,4),
 
-(1,'Manchester — Coffee lover','Let’s grab a flat white.',1,1,1),
-(1,'London — After work meet','Relaxed and friendly.',7,13,2),
-(1,'Birmingham — Looking for chats','Open to meeting.',5,11,3),
-(1,'Liverpool — No pressure meets','Let’s keep it simple.',7,13,4),
-(1,'Leeds — Mature only','Prefer older.',10,20,5),
-(1,'Glasgow — Friendly chats','Let’s talk.',1,2,6),
-(1,'Edinburgh — Bookworm here','Love reading and deep chats.',3,7,7),
-(1,'Cardiff — Fun and friendly','Let’s vibe.',5,11,8),
-(1,'Bristol — Looking for someone real','Open to meeting.',7,13,9),
-(1,'Sheffield — Casual chats','Let’s talk.',1,1,10),
+-- Leeds (location_id = 5)
+(1,'Leeds — Women seeking men','Friendly Leeds local, women seeking men for long term in Leeds.',1,1,5),
+(1,'Leeds — Men seeking women','Leeds man seeking women for long term connection in Leeds.',1,2,5),
+(1,'Leeds — Men seeking men','Leeds resident, men seeking men for long term in Leeds.',1,3,5),
+(1,'Leeds — Women seeking women','Women seeking women around Leeds for long term connection.',1,4,5),
+(1,'Leeds — Short term, women seeking men','Open to short term women seeking men around Leeds.',2,5,5),
+(1,'Leeds — Short term, men seeking women','Short term men seeking women in the Leeds area.',2,6,5),
+(1,'Leeds — Short term, men seeking men','Short term men seeking men around Leeds.',2,7,5),
+(1,'Leeds — Short term, women seeking women','Short term women seeking women in Leeds.',2,8,5),
+(1,'Leeds — Couples seeking women','Couple in Leeds seeking women for short term connection.',2,9,5),
+(1,'Leeds — Couples seeking couples','Couple in Leeds seeking other couples locally.',2,11,5),
 
-(1,'Manchester — Looking for laughs','Sense of humour essential.',1,1,1),
-(1,'London — Coffee date','Simple and relaxed.',7,13,2),
-(1,'Birmingham — Friendly meet','Let’s chat.',5,11,3),
-(1,'Liverpool — Open to new people','Seeing who’s around.',7,13,4),
-(1,'Leeds — Discreet meets','Privacy important.',10,20,5),
-(1,'Glasgow — Open-minded guy','Let’s talk.',1,2,6),
-(1,'Edinburgh — Looking for connection','Friendly and chilled.',3,7,7),
-(1,'Cardiff — No strings','Keeping it simple.',5,11,8),
-(1,'Bristol — Friendly chats','Let’s meet.',7,13,9),
-(1,'Sheffield — Open to meeting','Seeing who’s out there.',1,1,10),
+-- Glasgow (location_id = 6)
+(1,'Glasgow — Women seeking men','Friendly Glasgow local, women seeking men for long term in Glasgow.',1,1,6),
+(1,'Glasgow — Men seeking women','Glasgow man seeking women for long term connection in Glasgow.',1,2,6),
+(1,'Glasgow — Men seeking men','Glasgow resident, men seeking men for long term in Glasgow.',1,3,6),
+(1,'Glasgow — Women seeking women','Women seeking women around Glasgow for long term connection.',1,4,6),
+(1,'Glasgow — Short term, women seeking men','Open to short term women seeking men around Glasgow.',2,5,6),
+(1,'Glasgow — Short term, men seeking women','Short term men seeking women in the Glasgow area.',2,6,6),
+(1,'Glasgow — Short term, men seeking men','Short term men seeking men around Glasgow.',2,7,6),
+(1,'Glasgow — Short term, women seeking women','Short term women seeking women in Glasgow.',2,8,6),
+(1,'Glasgow — Couples seeking women','Couple in Glasgow seeking women for short term connection.',2,9,6),
+(1,'Glasgow — Couples seeking couples','Couple in Glasgow seeking other couples locally.',2,11,6),
 
-(1,'Manchester — Looking for someone kind','Genuine people only.',1,1,1),
-(1,'London — Quick meet?','In the area often.',7,13,2),
-(1,'Birmingham — Looking for real vibes','Honest and chilled.',6,16,3),
-(1,'Liverpool — Friendly guy','Let’s chat.',7,13,4),
-(1,'Leeds — Mature chats only','Prefer older.',10,20,5),
-(1,'Glasgow — Casual chats','Let’s talk.',1,2,6),
-(1,'Edinburgh — Coffee and books','Love reading.',3,7,7),
-(1,'Cardiff — Fun meets','Keeping it light.',5,11,8),
-(1,'Bristol — Looking for good company','Friendly and open.',7,13,9),
-(1,'Sheffield — Open to chats','Let’s talk.',1,1,10);
+-- Edinburgh (location_id = 7)
+(1,'Edinburgh — Women seeking men','Friendly Edinburgh local, women seeking men for long term in Edinburgh.',1,1,7),
+(1,'Edinburgh — Men seeking women','Edinburgh man seeking women for long term connection in Edinburgh.',1,2,7),
+(1,'Edinburgh — Men seeking men','Edinburgh resident, men seeking men for long term in Edinburgh.',1,3,7),
+(1,'Edinburgh — Women seeking women','Women seeking women around Edinburgh for long term connection.',1,4,7),
+(1,'Edinburgh — Short term, women seeking men','Open to short term women seeking men around Edinburgh.',2,5,7),
+(1,'Edinburgh — Short term, men seeking women','Short term men seeking women in the Edinburgh area.',2,6,7),
+(1,'Edinburgh — Short term, men seeking men','Short term men seeking men around Edinburgh.',2,7,7),
+(1,'Edinburgh — Short term, women seeking women','Short term women seeking women in Edinburgh.',2,8,7),
+(1,'Edinburgh — Couples seeking women','Couple in Edinburgh seeking women for short term connection.',2,9,7),
+(1,'Edinburgh — Couples seeking couples','Couple in Edinburgh seeking other couples locally.',2,11,7),
 
-INSERT INTO messages (sender_id,receiver_id,ad_id,content) VALUES
-(1,1,1,'Testing message system — looks good!'),
-(1,1,2,'Another test message for ad 2.');
+-- Cardiff (location_id = 8)
+(1,'Cardiff — Women seeking men','Friendly Cardiff local, women seeking men for long term in Cardiff.',1,1,8),
+(1,'Cardiff — Men seeking women','Cardiff man seeking women for long term connection in Cardiff.',1,2,8),
+(1,'Cardiff — Men seeking men','Cardiff resident, men seeking men for long term in Cardiff.',1,3,8),
+(1,'Cardiff — Women seeking women','Women seeking women around Cardiff for long term connection.',1,4,8),
+(1,'Cardiff — Short term, women seeking men','Open to short term women seeking men around Cardiff.',2,5,8),
+(1,'Cardiff — Short term, men seeking women','Short term men seeking women in the Cardiff area.',2,6,8),
+(1,'Cardiff — Short term, men seeking men','Short term men seeking men around Cardiff.',2,7,8),
+(1,'Cardiff — Short term, women seeking women','Short term women seeking women in Cardiff.',2,8,8),
+(1,'Cardiff — Couples seeking women','Couple in Cardiff seeking women for short term connection.',2,9,8),
+(1,'Cardiff — Couples seeking couples','Couple in Cardiff seeking other couples locally.',2,11,8),
+
+-- Bristol (location_id = 9)
+(1,'Bristol — Women seeking men','Friendly Bristol local, women seeking men for long term in Bristol.',1,1,9),
+(1,'Bristol — Men seeking women','Bristol man seeking women for long term connection in Bristol.',1,2,9),
+(1,'Bristol — Men seeking men','Bristol resident, men seeking men for long term in Bristol.',1,3,9),
+(1,'Bristol — Women seeking women','Women seeking women around Bristol for long term connection.',1,4,9),
+(1,'Bristol — Short term, women seeking men','Open to short term women seeking men around Bristol.',2,5,9),
+(1,'Bristol — Short term, men seeking women','Short term men seeking women in the Bristol area.',2,6,9),
+(1,'Bristol — Short term, men seeking men','Short term men seeking men around Bristol.',2,7,9),
+(1,'Bristol — Short term, women seeking women','Short term women seeking women in Bristol.',2,8,9),
+(1,'Bristol — Couples seeking women','Couple in Bristol seeking women for short term connection.',2,9,9),
+(1,'Bristol — Couples seeking couples','Couple in Bristol seeking other couples locally.',2,11,9),
+
+-- Sheffield (location_id = 10)
+(1,'Sheffield — Women seeking men','Friendly Sheffield local, women seeking men for long term in Sheffield.',1,1,10),
+(1,'Sheffield — Men seeking women','Sheffield man seeking women for long term connection in Sheffield.',1,2,10),
+(1,'Sheffield — Men seeking men','Sheffield resident, men seeking men for long term in Sheffield.',1,3,10),
+(1,'Sheffield — Women seeking women','Women seeking women around Sheffield for long term connection.',1,4,10),
+(1,'Sheffield — Short term, women seeking men','Open to short term women seeking men around Sheffield.',2,5,10),
+(1,'Sheffield — Short term, men seeking women','Short term men seeking women in the Sheffield area.',2,6,10),
+(1,'Sheffield — Short term, men seeking men','Short term men seeking men around Sheffield.',2,7,10),
+(1,'Sheffield — Short term, women seeking women','Short term women seeking women in Sheffield.',2,8,10),
+(1,'Sheffield — Couples seeking women','Couple in Sheffield seeking women for short term connection.',2,9,10),
+(1,'Sheffield — Couples seeking couples','Couple in Sheffield seeking other couples locally.',2,11,10);
+
+-- Messages (simple test messages)
+INSERT INTO messages (sender_id, receiver_id, ad_id, content) VALUES
+(1, 1, 1, 'Just testing the messaging system — everything looks good on my end.'),
+(1, 1, 5, 'Checking message delivery for this Manchester listing.'),
+(1, 1, 11, 'Testing a quick message for the London ad.'),
+(1, 1, 21, 'Sending a test message for the Birmingham post.'),
+(1, 1, 31, 'Verifying that messages work correctly for the Liverpool listing.'),
+(1, 1, 41, 'Glasgow message test — making sure everything sends properly.'),
+(1, 1, 51, 'Testing the chat feature on this Edinburgh ad.'),
+(1, 1, 61, 'Cardiff message test — confirming delivery.'),
+(1, 1, 71, 'Bristol listing message check — all good so far.'),
+(1, 1, 81, 'Testing the Sheffield ad messaging system.');
 

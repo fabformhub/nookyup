@@ -1,0 +1,63 @@
+<section class="pt-24 pb-16 text-center max-w-4xl mx-auto px-6">
+
+  <h1 class="text-5xl font-extrabold tracking-tight text-pink-300 drop-shadow-[0_0_25px_rgba(236,72,153,0.35)] mb-6">
+    Locations in <%= country.name %>
+  </h1>
+
+  <p class="text-lg text-slate-400 leading-relaxed max-w-2xl mx-auto mb-12">
+    Choose your city or region in 
+    <span class="text-pink-300 font-semibold"><%= country.name %></span>
+    to browse categories.
+  </p>
+
+</section>
+
+<div class="max-w-4xl mx-auto pb-20 px-6">
+
+  <% if (locations.length === 0) { %>
+
+    <p class="text-center text-slate-500 text-lg">
+      No locations found for <%= country.name %>.
+    </p>
+
+  <% } else { %>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+
+      <% locations.forEach(loc => { %>
+        <a 
+          href="/<%= country.slug %>/<%= loc.slug %>/categories"
+          class="
+            nookyup-hover
+            block p-8 rounded-xl
+            bg-slate-900/30 border border-slate-800/50 backdrop-blur-xl
+            text-slate-200
+
+            transition-all duration-500
+
+            hover:scale-[1.06]
+            hover:bg-gradient-to-r
+            hover:from-pink-600/30
+            hover:via-fuchsia-500/20
+            hover:to-purple-600/30
+            hover:shadow-[0_0_55px_rgba(236,72,153,0.8)]
+            hover:border-pink-500/80
+            hover:text-pink-200
+          "
+        >
+          <h2 class="text-2xl font-semibold tracking-wide">
+            <%= loc.name %>
+          </h2>
+
+          <p class="text-slate-400 mt-3 text-sm italic">
+            Browse categories in <%= loc.name %>.
+          </p>
+        </a>
+      <% }) %>
+
+    </div>
+
+  <% } %>
+
+</div>
+

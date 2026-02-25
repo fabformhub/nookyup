@@ -27,26 +27,26 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
 
     <% countries.forEach(c => { %>
-      <a 
-        href="/<%= c.slug %>"
-        class="
-          nookyup-hover
-          block p-8 rounded-xl
-          bg-slate-900/30 border border-slate-800/50 backdrop-blur-xl
-          text-slate-200
 
-          transition-all duration-500
-
-          hover:scale-[1.06]
-          hover:bg-gradient-to-r
-          hover:from-pink-600/30
-          hover:via-fuchsia-500/20
-          hover:to-purple-600/30
-          hover:shadow-[0_0_55px_rgba(236,72,153,0.8)]
-          hover:border-pink-500/80
-          hover:text-pink-200
-        "
-      >
+     <a 
+  href="/<%= c.slug %>/locations"
+  class="
+    nookyup-hover
+    block p-8 rounded-xl
+    bg-slate-900/30 border border-slate-800/50 backdrop-blur-xl
+    text-slate-200
+    transition-all duration-500
+    hover:scale-[1.06]
+    hover:bg-gradient-to-r
+    hover:from-pink-600/30
+    hover:via-fuchsia-500/20
+    hover:to-purple-600/30
+    hover:shadow-[0_0_55px_rgba(236,72,153,0.8)]
+    hover:border-pink-500/80
+    hover:text-pink-200
+  "
+>
+ 
         <h2 class="text-3xl font-semibold flex items-center gap-3 tracking-wide">
           <span><%= getFlagEmoji(c.slug) %></span>
           <span><%= c.name %></span>

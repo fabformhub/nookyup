@@ -1,0 +1,37 @@
+<section class="pt-24 pb-16 max-w-3xl mx-auto px-6">
+
+  <h1 class="text-5xl font-extrabold tracking-tight text-pink-300 drop-shadow-[0_0_25px_rgba(236,72,153,0.35)] mb-6">
+    <%= ad.title %>
+  </h1>
+
+  <p class="text-slate-500 text-sm italic mb-10">
+    Posted in <%= subcategory.name %> → <%= category.name %>  
+    (<%= location.name %>, <%= country.name %>)  
+    on <%= new Date(ad.created_at).toLocaleDateString() %>
+  </p>
+
+  <div
+    class="
+      p-8 rounded-xl
+      bg-slate-900/30 border border-slate-800/50 backdrop-blur-xl
+      text-slate-200
+      leading-relaxed
+      shadow-[0_0_35px_rgba(236,72,153,0.3)]
+    "
+  >
+    <p class="whitespace-pre-line text-lg">
+      <%= ad.description %>
+    </p>
+  </div>
+
+</section>
+
+<div class="max-w-3xl mx-auto px-6 pb-20 mt-10">
+  <a
+    href="/<%= country.slug %>/<%= location.slug %>/<%= category.slug %>/<%= category.id %>/<%= subcategory.slug %>/<%= subcategory.id %>"
+    class="text-pink-300 hover:text-pink-400 transition"
+  >
+    ← Back to ads
+  </a>
+</div>
+
