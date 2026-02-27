@@ -1,9 +1,14 @@
 <div class="space-y-8">
 
-  <% ads.forEach(ad => { %>
+  <% ads.forEach(ad => { 
+       const adSlug = ad.title
+         .toLowerCase()
+         .replace(/[^a-z0-9]+/g, "-")
+         .replace(/^-+|-+$/g, "");
+  %>
 
     <a 
-      href="/<%= country.slug %>/<%= location.slug %>/<%= category.slug %>/<%= category.id %>/<%= subcategory.slug %>/<%= subcategory.id %>/<%= ad.id %>"
+      href="/<%= country.slug %>/<%= location.slug %>/<%= category.slug %>/<%= subcategory.slug %>/<%= ad.id %>/<%= adSlug %>"
       class="
         block p-8 rounded-xl
         bg-slate-900/30 border border-slate-800/50 backdrop-blur-xl
@@ -29,4 +34,3 @@
   <% }) %>
 
 </div>
-

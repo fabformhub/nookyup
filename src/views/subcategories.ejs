@@ -25,15 +25,13 @@
 
       <% subcategories.forEach(sub => { %>
         <a 
-          href="/<%= country.slug %>/<%= location.slug %>/<%= category.slug %>/<%= category.id %>/<%= sub.slug %>/<%= sub.id %>"
+          href="/<%= country.slug %>/<%= location.slug %>/<%= category.slug %>/<%= sub.slug %>"
           class="
             nookyup-hover
             block p-8 rounded-xl
             bg-slate-900/30 border border-slate-800/50 backdrop-blur-xl
             text-slate-200
-
             transition-all duration-500
-
             hover:scale-[1.06]
             hover:bg-gradient-to-r
             hover:from-pink-600/30

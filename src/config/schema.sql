@@ -49,7 +49,7 @@ CREATE TABLE ads (
   title TEXT NOT NULL,
   description TEXT NOT NULL,
   category_id INTEGER NOT NULL,
-  subcategory_id INTEGER,
+  subcategory_id INTEGER NOT NULL,
   location_id INTEGER NOT NULL,
   status TEXT NOT NULL DEFAULT 'active',
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -70,4 +70,12 @@ CREATE TABLE messages (
   FOREIGN KEY (receiver_id) REFERENCES users(id),
   FOREIGN KEY (ad_id) REFERENCES ads(id)
 );
+
+
+CREATE INDEX idx_locations_country ON locations(country_id);
+CREATE INDEX idx_subcategories_category ON subcategories(category_id);
+CREATE INDEX idx_ads_category ON ads(category_id);
+CREATE INDEX idx_ads_subcategory ON ads(subcategory_id);
+CREATE INDEX idx_ads_location ON ads(location_id);
+CREATE INDEX idx_ads_user ON ads(user_id);
 
