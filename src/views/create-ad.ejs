@@ -1,0 +1,155 @@
+<div class="max-w-2xl mx-auto bg-white p-6 rounded shadow" x-data="adForm()">
+
+  <h1 class="text-2xl font-bold mb-4">Add New Ad</h1>
+
+  <!-- Country -->
+  <div class="mb-4">
+    <label class="block font-semibold mb-1">Country</label>
+    <select class="w-full border px-3 py-2 rounded" x-model="selectedCountry" @change="loadCities()">
+      <option value="">Select Country</option>
+      <template x-for="country in countries" :key="country.id">
+        <option :value="country.slug" x-text="country.name"></option>
+      </template>
+    </select>
+  </div>
+
+  <!-- City -->
+  <div class="mb-4">
+    <label class="block font-semibold mb-1">City</label>
+    <select class="w-full border px-3 py-2 rounded" x-model="selectedCity">
+      <option value="">Select City</option>
+      <template x-for="city in cities" :key="city.id">
+        <option :value="city.id" x-text="city.name"></option>
+      </template>
+    </select>
+  </div>
+
+  <!-- Category -->
+  <div class="mb-4">
+    <label class="block font-semibold mb-1">Category</label>
+    <select class="w-full border px-3 py-2 rounded" x-model="selectedCategory" @change="loadSubcategories()">
+      <option value="">Select Category</option>
+      <template x-for="cat in categories" :key="cat.id">
+        <option :value="cat.id" x-text="cat.name"></option>
+      </template>
+    </select>
+  </div>
+
+  <!-- Subcategory -->
+  <div class="mb-4">
+    <label class="block font-semibold mb-1">Subcategory</label>
+    <select class="w-full border px-3 py-2 rounded" x-model="selectedSubcategory">
+      <option value="">Select Subcategory</option>
+      <template x-for="sub in subcategories" :key="sub.id">
+        <option :value="sub.id" x-text="sub.name"></option>
+      </template>
+    </select>
+  </div>
+
+  <!-- Ad Title -->
+  <div class="mb-4">
+    <label class="block font-semibold mb-1">Title</label>
+    <input type="text" x-model="title" class="w-full border px-3 py-2 rounded" placeholder="Ad title">
+  </div>
+
+  <!-- Ad Description -->
+  <div class="mb-4">
+    <label class="block font-semibold mb-1">Description</label>
+    <textarea x-model="description" class="w-full border px-3 py-2 rounded" rows="4" placeholder="Ad description"></textarea>
+  </div>
+
+  <!-- Submit -->
+  <div>
+    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" @click="submitAd()">Add Ad</button>
+  </div>
+
+</div>
+
+<script>
+function adForm() {
+  return {
+    countries: [],
+    cities: [],
+    categories: [],
+    subcategories: [],
+    selectedCountry: 'uk', // preselect UK
+    selectedCity: '',
+    selectedCategory: '',
+    selectedSubcategory: '',
+    title: '',
+    description: '',
+
+    init() {
+      // Load countries
+      fetch('/api/countries')
+        .then(res => res.json())
+        .then(data => {
+          this.countries = data;
+          const ukExists = this.countries.find(c => c.slug === 'uk');
+          if (ukExists) {
+            this.selectedCountry = 'uk';
+            this.loadCities();
+          }
+        });
+
+      // Load categories
+      fetch('/api/categories')
+        .then(res => res.json())
+        .then(data => this.categories = data);
+    },
+
+    loadCities() {
+      this.cities = [];
+      this.selectedCity = '';
+      if (!this.selectedCountry) return;
+
+      fetch(`/api/cities?country=${this.selectedCountry}`)
+        .then(res => res.json())
+        .then(data => this.cities = data);
+    },
+
+    loadSubcategories() {
+      this.subcategories = [];
+      this.selectedSubcategory = '';
+      if (!this.selectedCategory) return;
+
+      fetch(`/api/subcategories?category=${this.selectedCategory}`)
+        .then(res => res.json())
+        .then(data => this.subcategories = data);
+    },
+
+    submitAd() {
+      if (!this.selectedCountry || !this.selectedCity || !this.selectedCategory || !this.selectedSubcategory || !this.title || !this.description) {
+        // simple frontend check, backend handles status/errors
+        return;
+      }
+
+      const payload = {
+        user_id: 1, // replace with logged-in user ID
+        title: this.title,
+        description: this.description,
+        category_id: this.selectedCategory,
+        subcategory_id: this.selectedSubcategory,
+        location_id: this.selectedCity
+      };
+
+      fetch('/api/ads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(res => res.json())
+        .then(() => {
+          // reset form (keep UK selected)
+          this.selectedCity = '';
+          this.selectedCategory = '';
+          this.selectedSubcategory = '';
+          this.title = '';
+          this.description = '';
+          this.cities = [];
+          this.subcategories = [];
+          this.loadCities(); // reload UK cities
+        });
+    }
+  }
+}
+</script>

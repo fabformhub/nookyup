@@ -1,15 +1,17 @@
 import db from "../config/db.js";
 
+// Get all countries
 export function getCountries(req, res) {
   const rows = db.prepare(`
-    SELECT DISTINCT country_code AS code
-    FROM locations
-    ORDER BY country_code
+    SELECT id, name, slug
+    FROM countries
+    ORDER BY name
   `).all();
 
   res.json(rows);
 }
 
+// Get all cities (locations) for a given country
 export function getCities(req, res) {
   const { country } = req.query;
 
@@ -18,15 +20,17 @@ export function getCities(req, res) {
   }
 
   const rows = db.prepare(`
-    SELECT city_name AS name, slug
-    FROM locations
-    WHERE country_code = ?
-    ORDER BY city_name
+    SELECT l.id, l.name, l.slug
+    FROM locations l
+    JOIN countries c ON l.country_id = c.id
+    WHERE c.slug = ?
+    ORDER BY l.name
   `).all(country);
 
   res.json(rows);
 }
 
+// Get all categories
 export function getCategories(req, res) {
   const rows = db.prepare(`
     SELECT id, name, slug
@@ -37,6 +41,7 @@ export function getCategories(req, res) {
   res.json(rows);
 }
 
+// Get all subcategories for a given category
 export function getSubcategories(req, res) {
   const { category } = req.query;
 
@@ -54,3 +59,20 @@ export function getSubcategories(req, res) {
   res.json(rows);
 }
 
+// Add a new ad
+export function addAd(req, res) {
+  const { user_id, title, description, category_id, subcategory_id, location_id } = req.body;
+
+  if (!user_id || !title || !description || !category_id || !subcategory_id || !location_id) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  const stmt = db.prepare(`
+    INSERT INTO ads (user_id, title, description, category_id, subcategory_id, location_id)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `);
+
+  const info = stmt.run(user_id, title, description, category_id, subcategory_id, location_id);
+
+  res.json({ success: true, ad_id: info.lastInsertRowid });
+}

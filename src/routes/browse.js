@@ -1,7 +1,5 @@
 import express from "express";
 import {
-  about,
-  contact,
   listCountries,
   listLocations,
   listCategories,
@@ -11,10 +9,6 @@ import {
 } from "../controllers/browseController.js";
 
 const router = express.Router();
-
-// Static pages
-router.get("/about", about);
-router.get("/contact", contact);
 
 // ---------------------------------------------
 // MOST SPECIFIC → LEAST SPECIFIC (CRITICAL)

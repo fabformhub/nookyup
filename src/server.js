@@ -158,12 +158,15 @@ import apiRoutes from "./routes/api.js";              // /api/*
 
 
 import browseRoutes from "./routes/browse.js";
+import pageRoutes from "./routes/page.js";
 
 // SYSTEM ROUTES
 
 //app.use("/", paymentRoutes);
 app.use("/auth", authRoutes);
+app.use("/dashboard", dashboardRoutes);
 app.use("/", authRoutes);
+app.use("/", pageRoutes);
 app.use("/", browseRoutes);
 
 //
