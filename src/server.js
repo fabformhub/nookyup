@@ -49,12 +49,12 @@ app.use(
 // DEFAULT PAGE TITLE
 // -----------------------------
 app.use((req, res, next) => {
-  res.locals.title = "NookyUp"; // fallback title
+  res.locals.title = "NookyUp";
   next();
 });
 
 // -----------------------------
-// FLASH HELPER (CUSTOM)
+// FLASH HELPER
 // -----------------------------
 app.use((req, res, next) => {
   req.flash = function (msg) {
@@ -64,7 +64,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Expose + clear flash messages
 app.use((req, res, next) => {
   res.locals.messages = req.session.messages || [];
   req.session.messages = [];
@@ -72,7 +71,7 @@ app.use((req, res, next) => {
 });
 
 // -----------------------------
-// USER INFO IN VIEWS (email + userId)
+// USER INFO IN VIEWS
 // -----------------------------
 app.use((req, res, next) => {
   res.locals.userId = req.session.userId || null;
@@ -89,22 +88,28 @@ app.use((req, res, next) => {
   next();
 });
 
-// -----------------------------
-// CSRF PROTECTION
-// -----------------------------
-app.use(csrf({ ignoreMethods: ["GET", "HEAD", "OPTIONS"] }));
+
+// Skip CSRF for /api/*
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next(); // skip CSRF for API routes
+  }
+
+  csrf({ ignoreMethods: ["GET", "HEAD", "OPTIONS"] })(req, res, next);
+});
 
 app.use((req, res, next) => {
-  res.locals.csrfToken = req.csrfToken();
+  if (!req.path.startsWith('/api')) {
+    res.locals.csrfToken = req.csrfToken();
+  }
   next();
-});
+})
 
 // -----------------------------
 // AUTO‑REDIRECT LOGGED‑IN USERS TO /dashboard
 // -----------------------------
 app.use((req, res, next) => {
   const loggedIn = !!req.session.userId;
-
   const publicPages = ["/", "/login", "/signup", "/about", "/contact"];
 
   if (loggedIn && publicPages.includes(req.path)) {
@@ -115,11 +120,10 @@ app.use((req, res, next) => {
 });
 
 // -----------------------------
-// GLOBAL USER + CURRENT ROUTE (for navbar active pill)
+// GLOBAL USER + CURRENT ROUTE
 // -----------------------------
 app.use((req, res, next) => {
   const normalizedPath = req.path.replace(/\/$/, "") || "/";
-
   res.locals.currentRoute = normalizedPath;
 
   if (!req.session.userId) {
@@ -140,40 +144,45 @@ app.use((req, res, next) => {
 // -----------------------------
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-
 app.use(expressLayouts);
 app.set("layout", "layouts/main");
 
 // -----------------------------
-// ROUTES (ORDER MATTERS!)
+// ROUTES (ORDER MATTERS)
 // -----------------------------
 
-// IMPORT ROUTES
-import authRoutes from "./routes/auth.js";            // /signup, /login, /logout
-import dashboardRoutes from "./routes/dashboard.js";  // /dashboard
-//import adminRoutes from "./routes/admin.js";          // /admin
-//import messagesRoutes from "./routes/messages.js";    // /messages
-import apiRoutes from "./routes/api.js";              // /api/*
-// import paymentRoutes from "./routes/paymentRoutes.js";
+// 1️⃣ API ROUTES FIRST (prevents conflicts with dynamic page routes)
+import apiRoutes from "./routes/api.js";
+app.use("/api", apiRoutes);
 
-
-import browseRoutes from "./routes/browse.js";
-import pageRoutes from "./routes/page.js";
-
-// SYSTEM ROUTES
-
-//app.use("/", paymentRoutes);
-app.use("/auth", authRoutes);
-app.use("/dashboard", dashboardRoutes);
+// 2️⃣ Authentication routes
+import authRoutes from "./routes/auth.js";
 app.use("/", authRoutes);
+
+// 3️⃣ Dashboard routes
+import dashboardRoutes from "./routes/dashboard.js";
+app.use("/dashboard", dashboardRoutes);
+
+// 4️⃣ Page routes
+import pageRoutes from "./routes/page.js";
 app.use("/", pageRoutes);
+
+// 4️⃣ Ads  routes
+import adsRoutes from "./routes/ads.js";
+app.use("/", adsRoutes);
+
+
+// 5️⃣ Browse routes (dynamic, wildcard routes) last
+import browseRoutes from "./routes/browse.js";
 app.use("/", browseRoutes);
 
-//
-// -----------------------------
-// API ROUTES
-// -----------------------------
-app.use("/api", apiRoutes);
+// 6️⃣ Optional: admin, messages, payment, etc. routes
+// import adminRoutes from "./routes/admin.js";
+// import messagesRoutes from "./routes/messages.js";
+// import paymentRoutes from "./routes/paymentRoutes.js";
+// app.use("/admin", adminRoutes);
+// app.use("/messages", messagesRoutes);
+// app.use("/", paymentRoutes);
 
 // -----------------------------
 // 404 HANDLER
@@ -200,4 +209,3 @@ const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`Listening on http://localhost:${PORT}`);
 });
-
