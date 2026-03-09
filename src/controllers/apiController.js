@@ -1,6 +1,8 @@
 import db from "../config/db.js";
 
-// Get all countries
+// ------------------------------
+// Countries
+// ------------------------------
 export function getCountries(req, res) {
   const rows = db.prepare(`
     SELECT id, name, slug
@@ -11,8 +13,10 @@ export function getCountries(req, res) {
   res.json(rows);
 }
 
-// Get all cities (locations) for a given country
-export function getCities(req, res) {
+// ------------------------------
+// Locations by country
+// ------------------------------
+export function getLocations(req, res) {
   const { country } = req.query;
 
   if (!country) {
@@ -30,7 +34,9 @@ export function getCities(req, res) {
   res.json(rows);
 }
 
-// Get all categories
+// ------------------------------
+// Categories
+// ------------------------------
 export function getCategories(req, res) {
   const rows = db.prepare(`
     SELECT id, name, slug
@@ -41,7 +47,9 @@ export function getCategories(req, res) {
   res.json(rows);
 }
 
-// Get all subcategories for a given category
+// ------------------------------
+// Subcategories by category
+// ------------------------------
 export function getSubcategories(req, res) {
   const { category } = req.query;
 
@@ -59,11 +67,42 @@ export function getSubcategories(req, res) {
   res.json(rows);
 }
 
-// Add a new ad
-export function addAd(req, res) {
-  const { user_id, title, description, category_id, subcategory_id, location_id } = req.body;
+// ------------------------------
+// Get a single ad (for editing)
+// ------------------------------
+export function getAd(req, res) {
+  const { id } = req.params;
 
-  if (!user_id || !title || !description || !category_id || !subcategory_id || !location_id) {
+  const ad = db.prepare(`
+    SELECT a.*,
+           l.country_id,
+           c.slug AS country_slug
+    FROM ads a
+    JOIN locations l ON a.location_id = l.id
+    JOIN countries c ON l.country_id = c.id
+    WHERE a.id = ?
+  `).get(id);
+
+  if (!ad) {
+    return res.status(404).json({ error: "Ad not found" });
+  }
+
+  res.json(ad);
+}
+
+// ------------------------------
+// Create ad (API version)
+// ------------------------------
+export function createAd(req, res) {
+  const userId = req.session.userId;   // FIXED
+
+  if (!userId) {
+    return res.status(401).json({ error: "Not logged in" });
+  }
+
+  const { title, description, category_id, subcategory_id, location_id } = req.body;
+
+  if (!title || !description || !category_id || !subcategory_id || !location_id) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
@@ -72,7 +111,53 @@ export function addAd(req, res) {
     VALUES (?, ?, ?, ?, ?, ?)
   `);
 
-  const info = stmt.run(user_id, title, description, category_id, subcategory_id, location_id);
+  const result = stmt.run(
+    userId,
+    title.trim(),
+    description.trim(),
+    category_id,
+    subcategory_id,
+    location_id
+  );
 
-  res.json({ success: true, ad_id: info.lastInsertRowid });
+  res.json({ success: true, id: result.lastInsertRowid });
 }
+
+// ------------------------------
+// Update ad (API version)
+// ------------------------------
+export function updateAd(req, res) {
+  const userId = req.session.userId;   // FIXED
+
+  if (!userId) {
+    return res.status(401).json({ error: "Not logged in" });
+  }
+
+  const { id } = req.params;
+  const { title, description, category_id, subcategory_id, location_id } = req.body;
+
+  if (!title || !description || !category_id || !subcategory_id || !location_id) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  // Optional: ensure user owns the ad
+  const ad = db.prepare(`SELECT user_id FROM ads WHERE id = ?`).get(id);
+  if (!ad) return res.status(404).json({ error: "Ad not found" });
+  if (ad.user_id !== userId) return res.status(403).json({ error: "Forbidden" });
+
+  db.prepare(`
+    UPDATE ads
+    SET title = ?, description = ?, category_id = ?, subcategory_id = ?, location_id = ?
+    WHERE id = ?
+  `).run(
+    title.trim(),
+    description.trim(),
+    category_id,
+    subcategory_id,
+    location_id,
+    id
+  );
+
+  res.json({ success: true });
+}
+

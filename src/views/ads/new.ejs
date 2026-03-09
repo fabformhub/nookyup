@@ -1,4 +1,4 @@
-<%- include("../partials/header", { title }) %>
+<%- include("../partials/header", { title: "Create Ad" }) %>
 
 <div class="max-w-3xl mx-auto py-12 px-6">
 
@@ -31,7 +31,7 @@
 
   <!-- Form -->
   <form 
-    action="/<%= country %>/<%= city %>/<%= category.slug %>/<%= subcategory ? subcategory.slug : '' %>/ads/new" 
+    action="/ads/create" 
     method="POST"
     class="
       nookyup-hover
@@ -63,11 +63,11 @@
       >
     </div>
 
-    <!-- Body -->
+    <!-- Description -->
     <div class="flex flex-col gap-2">
-      <label class="text-pink-300 font-medium tracking-wide">Body</label>
+      <label class="text-pink-300 font-medium tracking-wide">Description</label>
       <textarea 
-        name="body" 
+        name="description" 
         required
         class="
           w-full h-40 px-4 py-3 rounded-lg
@@ -77,12 +77,6 @@
         "
       ></textarea>
     </div>
-
-    <!-- Hidden fields -->
-    <input type="hidden" name="category_slug" value="<%= category.slug %>">
-    <% if (subcategory) { %>
-      <input type="hidden" name="subcategory_slug" value="<%= subcategory.slug %>">
-    <% } %>
 
     <!-- Submit Button -->
     <button 
@@ -107,4 +101,3 @@
 </div>
 
 <%- include("../partials/footer") %>
-

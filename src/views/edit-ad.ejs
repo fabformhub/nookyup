@@ -1,7 +1,8 @@
 <div id="adForm"
+     data-ad-id="<%= adId %>"
      class="max-w-2xl mx-auto bg-gray-50 p-6 rounded shadow text-gray-800">
 
-  <h1 class="text-2xl font-bold mb-4 text-gray-900">Create Ad</h1>
+  <h1 class="text-2xl font-bold mb-4 text-gray-900">Edit Ad</h1>
 
   <form @submit.prevent="saveAd">
 
@@ -73,12 +74,10 @@
                 placeholder="Ad description"></textarea>
     </div>
 
-    <!-- BUTTON -->
     <button type="submit"
-    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-  Create Ad
-</button>
-
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+      Save Changes
+    </button>
   </form>
 </div>
 
@@ -88,6 +87,8 @@ const el = document.getElementById("adForm");
 Vue.createApp({
   data() {
     return {
+      adId: el.dataset.adId,
+
       countries: [],
       locations: [],
       categories: [],
@@ -108,11 +109,7 @@ Vue.createApp({
       this.loadCategories()
     ]);
 
-    // Auto-select first country if available
-    if (this.countries.length > 0) {
-      this.selectedCountry = this.countries[0].slug;
-      await this.loadLocations(this.selectedCountry);
-    }
+    await this.loadAd();
   },
 
   watch: {
@@ -149,6 +146,24 @@ Vue.createApp({
       }).then(r => r.json());
     },
 
+    async loadAd() {
+      const ad = await fetch(`/api/ad/${this.adId}`, {
+        credentials: "include"
+      }).then(r => r.json());
+
+      this.title = ad.title;
+      this.description = ad.description;
+
+      this.selectedCountry = ad.country_slug;
+      await this.loadLocations(ad.country_slug);
+
+      this.selectedCategory = ad.category_id;
+      await this.loadSubcategories(ad.category_id);
+
+      this.selectedLocation = ad.location_id;
+      this.selectedSubcategory = ad.subcategory_id;
+    },
+
     async saveAd() {
       const payload = {
         title: this.title,
@@ -158,8 +173,8 @@ Vue.createApp({
         location_id: this.selectedLocation
       };
 
-      const res = await fetch(`/api/ad`, {
-        method: "POST",
+      const res = await fetch(`/api/ad/${this.adId}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
@@ -169,9 +184,10 @@ Vue.createApp({
       });
 
       const data = await res.json();
+      console.log("UPDATE RESPONSE:", data);
 
       if (!res.ok) {
-        alert("Failed to create ad: " + JSON.stringify(data));
+        alert("Update failed: " + JSON.stringify(data));
         return;
       }
 
