@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
     if (!deleteAdId) return;
 
-    const res = await fetch(`/ads/ad/${deleteAdId}`, {
+    const res = await fetch(`/api/ad/${deleteAdId}`, {
       method: "DELETE",
       headers: { "X-Requested-With": "XMLHttpRequest" }
     });
