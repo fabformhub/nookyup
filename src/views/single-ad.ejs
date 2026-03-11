@@ -1,15 +1,20 @@
 <section class="pt-24 pb-16 max-w-3xl mx-auto px-6">
 
-  <h1 class="text-5xl font-extrabold tracking-tight text-pink-300 drop-shadow-[0_0_25px_rgba(236,72,153,0.35)] mb-6">
+  <!-- Title -->
+  <h1 class="text-5xl font-extrabold tracking-tight text-pink-300 
+             drop-shadow-[0_0_25px_rgba(236,72,153,0.35)] mb-6">
     <%= ad.title %>
   </h1>
 
-  <p class="text-slate-500 text-sm italic mb-10">
-    Posted in <%= subcategory.name %> → <%= category.name %>  
-    (<%= location.name %>, <%= country.name %>)  
+  <!-- Meta -->
+  <p class="text-slate-500 text-sm italic mb-10 leading-relaxed">
+    Posted in 
+    <%= ad.subcategory_name || "Uncategorised" %> → <%= ad.category_name %><br>
+    <%= ad.location_name %><br>
     on <%= new Date(ad.created_at).toLocaleDateString() %>
   </p>
 
+  <!-- Body -->
   <div
     class="
       p-8 rounded-xl
@@ -20,19 +25,19 @@
     "
   >
     <p class="whitespace-pre-line text-lg">
-      <%= ad.description %>
+      <%= ad.description%>
     </p>
   </div>
 
 </section>
 
+<!-- Back Link -->
 <div class="max-w-3xl mx-auto px-6 pb-20 mt-10">
   <a
-    href="/<%= country.slug %>/<%= location.slug %>/<%= category.slug %>/<%= subcategory.slug %>"
+    href="/dashboard"
     class="text-pink-300 hover:text-pink-400 transition"
   >
-    ← Back to ads
+    ← Back to dashboard
   </a>
 </div>
-
 
