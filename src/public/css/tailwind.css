@@ -197,3 +197,15 @@
   color: #000 !important;
 }
 
+@layer components {
+  .icon-btn {
+    @apply cursor-pointer transition-all duration-200 ease-out
+           hover:scale-125 hover:-translate-y-1 active:scale-95
+           drop-shadow-sm hover:drop-shadow-lg;
+  }
+
+  .icon-svg {
+    @apply w-6 h-6;
+  }
+}
+
