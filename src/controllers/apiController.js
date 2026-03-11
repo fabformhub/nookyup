@@ -161,3 +161,36 @@ export function updateAd(req, res) {
   res.json({ success: true });
 }
 
+// ------------------------------
+// Delete ad (API version)
+// ------------------------------
+export function deleteAd(req, res) {
+  const userId = req.session.userId;   // ensure logged in
+
+  if (!userId) {
+    return res.status(401).json({ error: "Not logged in" });
+  }
+
+  const { id } = req.params;
+
+  // Ensure the ad exists and belongs to the user
+  const ad = db.prepare(`SELECT user_id FROM ads WHERE id = ?`).get(id);
+
+  if (!ad) {
+    return res.status(404).json({ error: "Ad not found" });
+  }
+
+  if (ad.user_id !== userId) {
+    return res.status(403).json({ error: "Forbidden" });
+  }
+
+  // Delete the ad
+  const result = db.prepare(`DELETE FROM ads WHERE id = ?`).run(id);
+
+  if (result.changes === 0) {
+    return res.status(500).json({ error: "Failed to delete ad" });
+  }
+
+  return res.json({ success: true });
+}
+

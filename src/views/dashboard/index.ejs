@@ -1,92 +1,112 @@
 <%- include("../partials/navbar.ejs", { title: title }) %>
 <%- include("../partials/flash.ejs") %>
 
-<div id="dashboard-app" class="max-w-6xl mx-auto py-16 px-6">
+<div class="max-w-6xl mx-auto py-16 px-6 space-y-10">
 
-  <!-- Header -->
-  <div class="flex justify-between items-center mb-12">
-    <h1 class="text-4xl font-extrabold tracking-tight text-pink-300">
-      Dashboard
-    </h1>
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+    <div>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-pink-300">Dashboard</h1>
+      <p class="text-lg text-slate-400 mt-3">Your ads, performance, and status at a glance.</p>
+    </div>
 
-    <a
-      href="/ads/new"
-      class="px-5 py-3 rounded-lg text-pink-300 border border-pink-500 bg-slate-900
-             hover:bg-slate-800 transition"
-    >
-      + Create new ad
+    <a href="/ads/create"
+       class="inline-flex items-center gap-2 text-lg px-5 py-3 rounded-xl text-pink-100 border border-pink-500/70 bg-gradient-to-r from-pink-500/20 to-purple-500/20 hover:from-pink-500/30 hover:to-purple-500/30 hover:border-pink-400 shadow-md hover:shadow-pink-500/20 transition-all duration-150">
+      <span class="text-xl leading-none">+</span>
+      <span>Create new ad</span>
     </a>
   </div>
 
-  <!-- Stats -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-    <div class="p-6 rounded-xl bg-slate-900 border border-slate-800 text-slate-200">
-      <p class="text-sm text-slate-400">Live ads</p>
-      <p class="text-3xl font-bold"><%= stats.live || 0 %></p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-150">
+      <p class="text-sm text-slate-400 mb-2">Live ads</p>
+      <p class="text-4xl font-bold tracking-tight text-slate-50"><%= stats.live || 0 %></p>
     </div>
 
-    <div class="p-6 rounded-xl bg-slate-900 border border-slate-800 text-slate-200">
-      <p class="text-sm text-slate-400">Drafts</p>
-      <p class="text-3xl font-bold"><%= stats.drafts || 0 %></p>
+    <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-150">
+      <p class="text-sm text-slate-400 mb-2">Drafts</p>
+      <p class="text-4xl font-bold tracking-tight text-slate-50"><%= stats.drafts || 0 %></p>
     </div>
 
-    <div class="p-6 rounded-xl bg-slate-900 border border-slate-800 text-slate-200">
-      <p class="text-sm text-slate-400">Pending</p>
-      <p class="text-3xl font-bold"><%= stats.pending || 0 %></p>
+    <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-150">
+      <p class="text-sm text-slate-400 mb-2">Pending review</p>
+      <p class="text-4xl font-bold tracking-tight text-slate-50"><%= stats.pending || 0 %></p>
     </div>
   </div>
 
-  <!-- Empty state -->
   <% if (!ads || ads.length === 0) { %>
-    <div class="p-10 rounded-2xl bg-slate-900 border border-slate-800 text-center">
-      <p class="text-slate-400 text-lg">
-        You haven’t posted any ads yet.
-      </p>
+    <div class="p-10 rounded-2xl bg-slate-900 border border-slate-800 text-center shadow-sm">
+      <p class="text-slate-300 text-lg">You haven’t posted any ads yet.</p>
+      <p class="text-slate-500 mt-2 text-sm">Create your first ad to start getting responses.</p>
     </div>
   <% } else { %>
-
-    <!-- Ads list -->
-    <div class="flex flex-col gap-8">
+    <div class="flex flex-col gap-6">
       <% ads.forEach(ad => { %>
-        <div class="p-7 rounded-2xl bg-slate-900 border border-slate-800 text-slate-200">
+        <div class="p-7 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-150">
+          <div class="flex items-start justify-between gap-4">
+            <div class="space-y-1">
+              <div class="flex items-center gap-3 flex-wrap">
+                <h3 class="text-2xl font-semibold tracking-tight text-slate-50"><%= ad.title %></h3>
+                <% if (ad.status === 'live') { %>
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/15 text-emerald-300 border border-emerald-500/40">
+                    Live
+                  </span>
+                <% } else if (ad.status === 'draft') { %>
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-500/15 text-slate-300 border border-slate-500/40">
+                    Draft
+                  </span>
+                <% } else if (ad.status === 'pending') { %>
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-500/15 text-amber-300 border border-amber-500/40">
+                    Pending review
+                  </span>
+                <% } %>
+              </div>
 
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="text-2xl font-semibold">
-              <%= ad.title %>
-            </h3>
+              <p class="text-sm text-slate-400">
+                <%= ad.city_name %> · <%= ad.category_name %>
+                <% if (ad.subcategory_name) { %> / <%= ad.subcategory_name %><% } %>
+              </p>
+            </div>
 
-            <span class="text-xs px-3 py-1 rounded-full border
-              <% if (ad.status === 'approved') { %>
-                bg-green-900 text-green-300 border-green-700
-              <% } else if (ad.status === 'draft') { %>
-                bg-slate-800 text-slate-300 border-slate-700
-              <% } else { %>
-                bg-yellow-900 text-yellow-300 border-yellow-700
-              <% } %>">
-              <%= ad.status %>
-            </span>
+            <button 
+              onclick="openDeleteModal(<%= ad.id %>, `<%- ad.title %>`)"
+              class="text-red-400 hover:text-red-300 transition-transform duration-150 ease-out hover:scale-110 hover:-translate-y-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
           </div>
 
-          <p class="text-sm text-slate-400 mb-2">
-            <%= ad.city_name %> · <%= ad.category_name %>
-            <% if (ad.subcategory_name) { %>
-              / <%= ad.subcategory_name %>
+          <p class="text-slate-300 mt-3 line-clamp-2"><%= ad.body %></p>
+
+          <div class="mt-5 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-6">
+              <a href="/ads/<%= ad.id %>" 
+                 class="text-pink-300 hover:text-pink-200 transition-transform duration-150 ease-out hover:scale-110 hover:-translate-y-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </a>
+
+              <a href="/ads/<%= ad.id %>/edit" 
+                 class="text-pink-300 hover:text-pink-200 transition-transform duration-150 ease-out hover:scale-110 hover:-translate-y-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M11 4h2m2.586 0a2 2 0 011.414.586l2.414 2.414a2 2 0 010 2.828l-8.486 8.486A2 2 0 0110.172 19H7a1 1 0 01-1-1v-3.172a2 2 0 01.586-1.414l8.486-8.486z" />
+                </svg>
+              </a>
+            </div>
+
+            <% if (ad.status === 'draft') { %>
+              <form method="POST" action="/ads/<%= ad.id %>/submit" class="inline">
+                <button type="submit" class="text-sm px-3 py-1.5 rounded-full bg-slate-800 text-slate-200 hover:bg-pink-500 hover:text-white transition-colors duration-150">
+                  Submit for review
+                </button>
+              </form>
             <% } %>
-          </p>
-
-          <p class="text-slate-300 line-clamp-2 mb-5">
-            <%= ad.body %>
-          </p>
-
-          <!-- Actions -->
-          <div class="flex gap-6 text-sm items-center">
-            <a href="/ads/<%= ad.id %>/edit" class="text-slate-400 hover:text-pink-300">Edit</a>
-
-            <delete-ad
-              ad-id="<%= ad.id %>"
-              action="/ads/<%= ad.id %>/delete"
-              csrf-token="<%= csrfToken %>"
-            ></delete-ad>
           </div>
 
         </div>
@@ -96,8 +116,96 @@
 
 </div>
 
-<!-- Vue entry -->
-<script type="module" src="/js/dashboard.js"></script>
+<div 
+  id="deleteModal"
+  class="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center"
+  style="display:none;"
+>
+  <div 
+    id="deletePanel"
+    class="bg-white text-black p-6 rounded-xl shadow-2xl w-80 transform scale-95 opacity-0 transition-all duration-200 outline-none"
+    tabindex="-1"
+  >
+    <p class="text-lg mb-4">
+      Are you sure you want to delete 
+      <span id="deleteAdTitle" class="font-bold"></span>?
+    </p>
 
-<%- include("../partials/footer.ejs") %>
+    <div class="flex justify-end gap-4">
+      <button 
+        onclick="closeDeleteModal()" 
+        class="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition-colors duration-150"
+      >
+        No
+      </button>
+
+      <button 
+        id="confirmDeleteBtn"
+        class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-400 transition-colors duration-150"
+      >
+        Yes, delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+let deleteAdId = null;
+
+function openDeleteModal(id, title) {
+  deleteAdId = id;
+  document.getElementById("deleteAdTitle").textContent = title;
+
+  const modal = document.getElementById("deleteModal");
+  const panel = document.getElementById("deletePanel");
+
+  modal.style.display = "flex";
+
+  requestAnimationFrame(() => {
+    panel.classList.remove("opacity-0", "scale-95");
+    panel.classList.add("opacity-100", "scale-100");
+  });
+
+  panel.focus();
+}
+
+function closeDeleteModal() {
+  const modal = document.getElementById("deleteModal");
+  const panel = document.getElementById("deletePanel");
+
+  panel.classList.add("opacity-0", "scale-95");
+  panel.classList.remove("opacity-100", "scale-100");
+
+  setTimeout(() => {
+    modal.style.display = "none";
+  }, 200);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const confirmBtn = document.getElementById("confirmDeleteBtn");
+
+  confirmBtn.addEventListener("click", async () => {
+    if (!deleteAdId) return;
+
+    const res = await fetch(`/ads/ad/${deleteAdId}`, {
+      method: "DELETE",
+      headers: { "X-Requested-With": "XMLHttpRequest" }
+    });
+
+    if (res.ok) {
+      window.location.reload();
+    } else {
+      closeDeleteModal();
+    }
+  });
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeDeleteModal();
+  });
+
+  document.getElementById("deleteModal").addEventListener("click", e => {
+    if (e.target.id === "deleteModal") closeDeleteModal();
+  });
+});
+</script>
 

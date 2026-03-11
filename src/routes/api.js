@@ -6,7 +6,8 @@ import {
   getSubcategories,
   getAd,
   createAd,
-  updateAd
+  updateAd,
+  deleteAd
 } from "../controllers/apiController.js";
 
 const router = express.Router();
@@ -27,6 +28,9 @@ router.post("/ad", createAd);
 
 // Update existing ad
 router.put("/ad/:id", updateAd);
+
+// 🔥 Delete ad
+router.delete("/ad/:id", deleteAd);
 
 export default router;
 
