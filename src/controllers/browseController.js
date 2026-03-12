@@ -1,4 +1,5 @@
 import db from "../config/db.js";
+import { getCountryFlag } from "../helpers/flags.js";
 
 export const about = (req, res) => {
   res.render("about", { title: "About" });
@@ -11,6 +12,7 @@ export const contact = (req, res) => {
 /* ---------------------------
    LIST COUNTRIES
 ---------------------------- */
+
 export const listCountries = (req, res) => {
   try {
     const countries = db.prepare(`
@@ -19,16 +21,22 @@ export const listCountries = (req, res) => {
       ORDER BY name ASC
     `).all();
 
-    res.render("countries", { countries });
+    const countriesWithFlags = countries.map(c => ({
+      ...c,
+      flag: getCountryFlag(c.slug)
+    }));
+
+    res.render("countries", { countries: countriesWithFlags });
   } catch (err) {
     console.error("Countries controller error:", err);
     res.status(500).send("Server error");
   }
 };
 
-/* ---------------------------
+/* -------------------------
    LIST LOCATIONS
 ---------------------------- */
+
 export const listLocations = (req, res) => {
   const { countrySlug } = req.params;
 

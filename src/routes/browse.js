@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
   listCountries,
   listLocations,
@@ -7,6 +8,7 @@ import {
   listAds,
   viewAd
 } from "../controllers/browseController.js";
+
 
 const router = express.Router();
 

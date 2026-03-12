@@ -137,7 +137,7 @@ app.use("/api", apiRoutes);
 
 //  Auth routes
 import authRoutes from "./routes/auth.js";
-app.use("/", authRoutes);
+app.use("/auth", authRoutes);
 
 //  Dashboard (user ads & stats)
 import dashboardRoutes from "./routes/dashboard.js";
@@ -152,8 +152,8 @@ import pageRoutes from "./routes/page.js";
 app.use("/", pageRoutes);
 
 //  Browse routes (dynamic wildcards, should be last)
-//import browseRoutes from "./routes/browse.js";
-//app.use("/", browseRoutes);
+import browseRoutes from "./routes/browse.js";
+app.use("/", browseRoutes);
 
 // 7️⃣ Optional: admin, messages, payments
 // import adminRoutes from "./routes/admin.js";
