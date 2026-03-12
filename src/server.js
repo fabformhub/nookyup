@@ -52,7 +52,7 @@ app.set("layout", "layouts/main");
 // DEFAULT PAGE TITLE
 // -----------------------------
 app.use((req, res, next) => {
-  res.locals.title = "NookyUp";
+  res.locals.title = "NookyUp – Adult Classifieds, Dating & Local Hookups";
   next();
 });
 
