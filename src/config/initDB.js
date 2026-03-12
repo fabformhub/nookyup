@@ -46,14 +46,26 @@ console.log("📐 Schema applied");
 const passwordHash = bcrypt.hashSync(SEED_USER_PASSWORD, 10);
 
 db.transaction(() => {
-  /* ---------------- COUNTRIES (UK + IRELAND ONLY) ---------------- */
+  /* ---------------- COUNTRIES (UK + IRELAND) ---------------- */
 
   const insertCountry = db.prepare(
-    `INSERT INTO countries (id, name, slug) VALUES (?, ?, ?)`
+    `INSERT INTO countries (id, name, slug, tagline)
+     VALUES (?, ?, ?, ?)`
   );
 
-  insertCountry.run(1, "Ireland", "ie");
-  insertCountry.run(2, "United Kingdom", "uk");
+  insertCountry.run(
+    1,
+    "Ireland",
+    "ie",
+    "Ireland: Sure look… the craic’s mighty and the nooky’s even mightier."
+  );
+
+  insertCountry.run(
+    2,
+    "United Kingdom",
+    "uk",
+    "The UK: A groovy little hotspot for cheeky nooky… oh behave."
+  );
 
   /* ---------------- USER ---------------- */
 
@@ -62,7 +74,7 @@ db.transaction(() => {
      VALUES (?, ?, ?, ?)`
   ).run(SEED_USER_ID, "irishgeoff", "irishgeoff@yahoo.com", passwordHash);
 
-  /* ---------------- LOCATIONS (UK + IRELAND CITIES) ---------------- */
+  /* ---------------- LOCATIONS ---------------- */
 
   const insertLocation = db.prepare(
     `INSERT INTO locations (id, name, slug, country_id)
@@ -173,21 +185,9 @@ db.transaction(() => {
      VALUES (?, ?, ?)`
   );
 
-  insertCategory.run(
-    1,
-    "Long Term Relationships",
-    "long-term-relationships"
-  );
-  insertCategory.run(
-    2,
-    "Short Term Relationships",
-    "short-term-relationships"
-  );
-  insertCategory.run(
-    3,
-    "Personal Services",
-    "personal-services"
-  );
+  insertCategory.run(1, "Long Term Relationships", "long-term-relationships");
+  insertCategory.run(2, "Short Term Relationships", "short-term-relationships");
+  insertCategory.run(3, "Personal Services", "personal-services");
 
   /* ---------------- SUBCATEGORIES ---------------- */
 
