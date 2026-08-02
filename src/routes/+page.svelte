@@ -1,22 +1,45 @@
 <script>
   import { enhance } from '$app/forms';
-
   let { data, form } = $props();
 </script>
 
-<h1>Hello World</h1>
+<div class="min-h-screen bg-slate-50 flex items-start justify-center px-4 py-16">
+  <div class="w-full max-w-md">
+    <h1 class="text-3xl font-bold text-slate-900 mb-6 text-center">
+      Hello World
+    </h1>
 
-<form method="POST" action="?/create" use:enhance>
-  <input type="text" name="content" placeholder="Type a message..." required />
-  <button type="submit">Add</button>
-</form>
+    <form
+      method="POST"
+      action="?/create"
+      use:enhance
+      class="flex gap-2 mb-4"
+    >
+      <input
+        type="text"
+        name="content"
+        placeholder="Type a message..."
+        required
+        class="flex-1 rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+      />
+      <button
+        type="submit"
+        class="rounded-lg bg-indigo-600 px-4 py-2 text-white font-medium hover:bg-indigo-700 transition-colors"
+      >
+        Add
+      </button>
+    </form>
 
-{#if form?.error}
-  <p style="color: red">{form.error}</p>
-{/if}
+    {#if form?.error}
+      <p class="text-red-600 text-sm mb-4">{form.error}</p>
+    {/if}
 
-<ul>
-  {#each data.messages as message}
-    <li>{message.content}</li>
-  {/each}
-</ul>
+    <ul class="space-y-2">
+      {#each data.messages as message}
+        <li class="rounded-lg bg-white border border-slate-200 px-4 py-3 text-slate-800 shadow-sm">
+          {message.content}
+        </li>
+      {/each}
+    </ul>
+  </div>
+</div>
