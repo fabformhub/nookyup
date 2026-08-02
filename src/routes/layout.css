@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+
+@theme {
+  --color-ink: #171a24;
+  --color-paper: #f1ece2;
+  --color-paper-60: rgba(241, 236, 226, 0.6);
+  --color-paper-30: rgba(241, 236, 226, 0.3);
+  --color-lamp: #e8ab55;
+  --color-lamp-light: #f0bb70;
+  --color-line: rgba(241, 236, 226, 0.14);
+
+  --font-display: 'Fraunces', serif;
+  --font-sans: 'Archivo', sans-serif;
+}
