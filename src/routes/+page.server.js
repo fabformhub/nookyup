@@ -17,21 +17,23 @@ export async function load() {
 export const actions = {
   create: async ({ request }) => {
     const formData = await request.formData();
-    const content = formData.get('content');
+    const content = formData.get('content')?.toString().trim();
 
-    if (!content || content.toString().trim() === '') {
+    if (!content) {
       return { success: false, error: 'Message cannot be empty' };
     }
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('messages')
-      .insert({ content: content.toString() });
+      .insert({ content })
+      .select()
+      .single();
 
     if (error) {
       console.error(error);
       return { success: false, error: error.message };
     }
 
-    return { success: true };
+    return { success: true, message: data };
   }
 };

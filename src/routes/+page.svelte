@@ -1,6 +1,8 @@
 <script>
   import { enhance } from '$app/forms';
   let { data, form } = $props();
+
+  let messages = $state(data.messages);
 </script>
 
 <div class="min-h-screen bg-slate-50 flex items-start justify-center px-4 py-16">
@@ -12,7 +14,16 @@
     <form
       method="POST"
       action="?/create"
-      use:enhance
+      use:enhance={() => {
+        return async ({ result, update }) => {
+          if (result.type === 'success' && result.data?.success) {
+            messages = [result.data.message, ...messages];
+            await update({ reset: true });
+          } else {
+            await update();
+          }
+        };
+      }}
       class="flex gap-2 mb-4"
     >
       <input
@@ -35,7 +46,7 @@
     {/if}
 
     <ul class="space-y-2">
-      {#each data.messages as message}
+      {#each messages as message (message.id)}
         <li class="rounded-lg bg-white border border-slate-200 px-4 py-3 text-slate-800 shadow-sm">
           {message.content}
         </li>
